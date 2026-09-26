@@ -27,8 +27,9 @@ ROOM = {
     'Entrance': 'Entrance corridor with smoked oak built-in shoe cabinet, boucle bench, rug, downlights.',
     'FamilyLounge': 'Family lounge: ivory boucle sofa, round travertine coffee table, oak media wall with TV, '
                     'wool rug, sheer curtains, glass door to a planted sunroom, potted olive tree.',
-    'Terrace': 'Planted sunroom under a glass roof: travertine planters with lush green shrubs, two linen lounge '
-               'chairs, small round table, olive tree, bright daylight.',
+    'Terrace': 'Glass greenhouse sitting room: pitched clear glass roof on slim black steel frames, lush vertical green wall, '
+               'hanging trailing plants in ceramic pots, travertine planters with shrubs, olive trees, ivory linen sofa, two '
+               'lounge chairs, round oak coffee table, warm string lights along the ridge, bright natural daylight from above.',
     'MasterBedroom': 'Master bedroom: bed with tall upholstered taupe linen headboard wall with hidden warm light, '
                      'ivory linen bedding, oak nightstands, wall sconces, boucle bench, smoked oak wardrobes, '
                      'dressing table with mirror, sheer curtains, wool rug.',
