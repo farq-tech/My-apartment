@@ -102,19 +102,18 @@ def travertine_mat():
     tex.projection_blend = 0.15
     tc = N.new('ShaderNodeTexCoord')
     mp = N.new('ShaderNodeMapping')
-    mp.inputs['Rotation'].default_value = (0, 0, math.radians(90))
-    mp.inputs['Scale'].default_value = (1 / 0.9, 1 / 0.9, 1 / 0.9)
+    mp.inputs['Scale'].default_value = (1 / 0.6, 1 / 0.6, 1 / 0.6)
     L.new(tc.outputs['Object'], mp.inputs['Vector'])
     L.new(mp.outputs['Vector'], tex.inputs['Vector'])
     br = N.new('ShaderNodeTexBrick')
     br.offset = 0.0
     br.inputs['Mortar Size'].default_value = 0.0015
-    br.inputs['Brick Width'].default_value = 1.2
-    br.inputs['Row Height'].default_value = 0.6
+    br.inputs['Brick Width'].default_value = 0.6
+    br.inputs['Row Height'].default_value = 1.2
     br.inputs['Scale'].default_value = 1.0
-    br.inputs['Color1'].default_value = (1, 1, 1, 1)
-    br.inputs['Color2'].default_value = (1, 1, 1, 1)
-    br.inputs['Mortar'].default_value = (0.62, 0.6, 0.57, 1)
+    br.inputs['Color1'].default_value = (1.15, 1.15, 1.15, 1)
+    br.inputs['Color2'].default_value = (1.12, 1.12, 1.12, 1)
+    br.inputs['Mortar'].default_value = (0.7, 0.68, 0.65, 1)
     L.new(tc.outputs['Object'], br.inputs['Vector'])
     mix = N.new('ShaderNodeMix')
     mix.data_type = 'RGBA'
@@ -174,6 +173,27 @@ def wallpaper_mat():
     return m
 
 
+def glass_mat():
+    m, N, L = node_mat('glass')
+    out = N['Material Output']
+    N.remove(N['Principled BSDF'])
+    g = N.new('ShaderNodeBsdfGlass')
+    g.inputs['Roughness'].default_value = 0.0
+    g.inputs['IOR'].default_value = 1.45
+    t = N.new('ShaderNodeBsdfTransparent')
+    lp = N.new('ShaderNodeLightPath')
+    mx = N.new('ShaderNodeMixShader')
+    mxf = N.new('ShaderNodeMath')
+    mxf.operation = 'MAXIMUM'
+    L.new(lp.outputs['Is Shadow Ray'], mxf.inputs[0])
+    L.new(lp.outputs['Is Diffuse Ray'], mxf.inputs[1])
+    L.new(mxf.outputs[0], mx.inputs['Fac'])
+    L.new(g.outputs[0], mx.inputs[1])
+    L.new(t.outputs[0], mx.inputs[2])
+    L.new(mx.outputs[0], out.inputs['Surface'])
+    return m
+
+
 M = dict(
     wall=mat('wall', '#D9D3C8', 0.85),
     ceiling=mat('ceiling', '#EFEBE4', 0.9),
@@ -190,7 +210,7 @@ M = dict(
     wool_rug=mat('wool_rug', '#D8CFC1', 1.0, sheen=0.4),
     rug_taupe=mat('rug_taupe', '#B5A796', 1.0, sheen=0.4),
     stone_top=mat('stone_top', '#E9E4DB', 0.25, coat=0.3),
-    glass=mat('glass', '#FFFFFF', 0.02, trans=1.0),
+    glass=glass_mat(),
     sheer=mat('sheer', '#F4F0E8', 0.9, trans=0.65),
     dark=mat('dark_screen', '#111111', 0.15, coat=0.6),
     white_ceramic=mat('ceramic', '#F5F3EF', 0.12, coat=0.5),
@@ -734,7 +754,7 @@ curtain(7.75, 0.28, 10.35, 0.28, 0.02, 2.95, name='curt_din')
 box('sideboard', 12.05, 0.9, 0.0, 12.5, 3.5, 0.8, M['oak'], 0.01)
 box('sideboard_top', 12.03, 0.88, 0.8, 12.5, 3.52, 0.83, M['trav'])
 art(12.47, 1.3, 12.5, 3.1, 1.25, 2.35, M['art'])
-plant(11.7, 3.75, h=1.7)
+plant(12.15, 0.55, h=1.7)
 # --- kitchen (x 8.2-11.0, y 4.25-7.9)
 box('k_base_top', 8.2, 7.3, 0.0, 10.4, 7.9, 0.88, M['oak'], 0.005)
 box('k_counter', 8.2, 7.28, 0.88, 10.4, 7.9, 0.92, M['stone_top'])
@@ -772,7 +792,6 @@ z = L2Z
 # --- entrance corridor (x 5.35-6.85, y 4.5-7.9); door at top x 5.45-6.45
 joinery_wall(6.45, 4.6, 6.85, 6.85, z, z + 2.4, M['oak'], 'shoe', panel=0.55)
 box('shoe_top', 6.45, 4.6, z + 2.4, 6.85, 6.85, z + CEIL, M['wall'])
-box('shoe_niche', 6.4, 5.4, z + 0.95, 6.46, 6.1, z + 1.35, M['led'])
 box('entry_bench', 6.45, 6.95, z, 6.85, 7.75, z + 0.45, M['boucle'], 0.04)
 rug(5.55, 6.3, 6.35, 7.7, z, M['rug_taupe'], 'entry_rug')
 for yy in (5.2, 6.2, 7.2):
@@ -791,7 +810,7 @@ joinery_wall(10.8, 0.5, 10.9, 3.2, z + 0.48, z + CEIL, M['oak'], 'tv2wall', pane
 box('tv2', 10.76, 0.95, z + 1.05, 10.8, 2.6, z + 1.98, M['dark'])
 curtain(8.15, 0.28, 10.65, 0.28, z + 0.02, z + 2.95, name='curt_fam')
 pendant_ring(8.3, 2.05, z + CEIL, 0.6, 0.9, 'pend2')
-plant(5.75, 3.7, z, 1.7)
+plant(5.75, 0.55, z, 1.7)
 # --- terrace / sunroom (x 0.2-5.2, y 0.2-3.0), glass roof
 box('planter_L', 0.2, 0.2, z, 0.75, 3.0, z + 0.55, M['trav'])
 box('planter_B', 0.75, 0.2, z, 5.2, 0.7, z + 0.55, M['trav'])
@@ -804,7 +823,7 @@ for k in range(260):
         px, py = 0.8 + _g.random() * 4.3, 0.25 + _g.random() * 0.4
     o = sphere('shrub', px, py, z + 0.58 + _g.random() * 0.45, 0.06, M['plant'], 1.0, 0.4, 0.2)
     o.rotation_euler = (_g.random() * 3, _g.random() * 3, _g.random() * 3)
-plant(4.8, 2.6, z, 2.0)
+plant(4.8, 0.98, z, 2.0)
 for o in lounge_chair(1.9, 1.9, 200, M['linen'], 'tlc1'):
     o.location.z += z
 for o in lounge_chair(3.4, 1.9, 160, M['linen'], 'tlc2'):
@@ -906,6 +925,12 @@ for (x, y) in [(6.1, 1.0), (10.3, 3.7), (11.9, 3.85), (8.6, 7.1), (13.5, 3.7), (
                (11.9, 7.2), (11.9, 6.1), (11.9, 2.4), (0.9, 4.6), (5.9, 7.4), (11.9, 4.95)]:
     downlight(x, y, L2Z + CEIL)
 cove(0.5, 0.5, 4.8, 5.2, CEIL, 18)
+for (x0, y0, x1, y1, zc, st) in [(5.5, 4.7, 6.8, 7.7, CEIL, 60), (0.3, 3.3, 1.5, 5.4, L2Z + CEIL, 60),
+                                 (11.2, 5.7, 12.6, 7.8, L2Z + CEIL, 60), (11.2, 0.3, 12.6, 3.1, L2Z + CEIL, 60),
+                                 (0.4, 5.8, 4.0, 7.8, L2Z + CEIL, 45), (4.2, 5.8, 5.1, 7.8, CEIL, 50),
+                                 (5.45, 4.6, 6.8, 7.8, L2Z + CEIL, 40), (1.9, 3.3, 5.1, 5.4, L2Z + CEIL, 25),
+                                 (11.2, 4.6, 12.6, 5.4, L2Z + CEIL, 40), (10.95, 3.45, 12.65, 4.25, L2Z + CEIL, 40)]:
+    cove(x0, y0, x1, y1, zc, st)
 cove(5.6, 0.5, 12.3, 4.0, CEIL, 14)
 cove(5.6, 0.5, 10.7, 4.1, L2Z + CEIL, 16)
 cove(13.1, 0.4, 19.6, 4.1, L2Z + CEIL, 14)
@@ -917,12 +942,18 @@ scn.world = world
 world.use_nodes = True
 wn = world.node_tree.nodes
 sky = wn.new('ShaderNodeTexSky')
-sky.sky_type = 'NISHITA'
+for _t in ('NISHITA', 'SINGLE_SCATTERING', 'MULTIPLE_SCATTERING'):
+    try:
+        sky.sky_type = _t
+        break
+    except TypeError:
+        pass
 sky.sun_elevation = math.radians(38)
 sky.sun_rotation = math.radians(200)
 sky.sun_intensity = 0.45
 sky.air_density = 1.2
-sky.dust_density = 2.5
+if hasattr(sky, 'dust_density'):
+    sky.dust_density = 2.5
 world.node_tree.links.new(sky.outputs['Color'], wn['Background'].inputs['Color'])
 wn['Background'].inputs['Strength'].default_value = 0.35
 sun = bpy.data.lights.new('sun', 'SUN')
@@ -940,6 +971,16 @@ for (x0, y0, x1, y1, h) in [(-40, -38, -10, -22, 16), (-6, -34, 14, -24, 12), (1
 # ---------------------------------------------------------------- render settings
 scn.render.engine = 'CYCLES'
 scn.cycles.device = 'CPU'
+try:
+    _cp = bpy.context.preferences.addons['cycles'].preferences
+    _cp.compute_device_type = 'METAL'
+    _cp.get_devices()
+    for _d in _cp.devices:
+        _d.use = True
+    scn.cycles.device = 'GPU'
+    print('DEVICE GPU METAL', [d.name for d in _cp.devices], flush=True)
+except Exception as _e:
+    print('DEVICE CPU', _e, flush=True)
 scn.cycles.samples = int(os.environ.get('SAMPLES', '24'))
 scn.cycles.use_denoising = True
 scn.cycles.max_bounces = 8
@@ -951,8 +992,13 @@ scn.cycles.caustics_refractive = False
 scn.render.resolution_x = int(os.environ.get('RX', '1024'))
 scn.render.resolution_y = int(os.environ.get('RY', '683'))
 scn.view_settings.view_transform = 'AgX'
-scn.view_settings.look = 'AgX - Base Contrast'
-scn.view_settings.exposure = float(os.environ.get('EXPO', '-0.15'))
+for _lk in ('AgX - Base Contrast', 'Base Contrast'):
+    try:
+        scn.view_settings.look = _lk
+        break
+    except TypeError:
+        pass
+scn.view_settings.exposure = float(os.environ.get('EXPO', '-0.45'))
 scn.render.image_settings.file_format = 'JPEG'
 scn.render.image_settings.quality = 92
 

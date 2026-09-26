@@ -4,7 +4,9 @@ usage: python3 refine_all.py BASE_DIR OUT_DIR
 import os, sys, time, subprocess
 
 BASE = ('Turn this 3D render into an ultra photorealistic architectural interior photograph of a finished Riyadh apartment. '
-        'Keep the exact room geometry, camera angle, walls, doors, windows and every furniture position unchanged. '
+        'Keep the exact room geometry, camera angle, walls, doors, windows, ceiling and every furniture piece exactly as in the render: '
+        'do not add, remove, replace or move anything; only make materials, light and textures photographic. '
+        'Windows stay flush windows with a solid wall below the sill: no balconies, no railings, no sliding doors, no city towers outside. '
         'Keep the floor exactly as it is: light warm grey marble-look 120x60 ceramic tiles with soft subtle veining and thin joints, satin finish. '
         'Light greige matte painted walls, smoked oak joinery, satin bronze details, bright soft natural daylight, '
         'realistic shadows and reflections, calm quiet-luxury styling, high-end interior photography. ')

@@ -28,6 +28,6 @@ if __name__ == '__main__':
     seed = int(sys.argv[4]) if len(sys.argv) > 4 else 7
     c = InferenceClient(provider='fal-ai', api_key=os.environ['HF_token'])
     img = c.image_to_image(open(src, 'rb').read(), prompt=prompt, model='black-forest-labs/FLUX.1-Kontext-dev',
-                           guidance_scale=2.5, num_inference_steps=28, seed=seed, sync_mode=True)
+                           guidance_scale=float(os.environ.get('GUIDE', '2.0')), num_inference_steps=28, seed=seed, sync_mode=True)
     img.save(dst, quality=92)
     print('ok', dst, img.size)
