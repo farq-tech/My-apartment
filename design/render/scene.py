@@ -195,7 +195,7 @@ def glass_mat():
 
 
 M = dict(
-    wall=mat('wall', os.environ.get('WALL', '#D9D3C8'), 0.85),
+    wall=mat('wall', os.environ.get('WALL', '#BFB2A2'), 0.85),
     ceiling=mat('ceiling', '#EFEBE4', 0.9),
     floor=tile_floor_mat(),
     trav=travertine_mat(),
@@ -298,7 +298,7 @@ def rot_group(objs, cx, cy, ang):
 
 
 # ---------------------------------------------------------------- architecture
-OPEN_DOORS = {(4.15, 5.05), (3.3, 4.2), (11.3, 12.2), (4.55, 5.4), (3.45, 4.25), (9.75, 10.65)}
+OPEN_DOORS = {(5.45, 6.45), (4.15, 5.05), (3.3, 4.2), (11.3, 12.2), (4.55, 5.4), (3.45, 4.25), (9.75, 10.65)}
 def build_wall(x0, y0, x1, y1, openings, z0, h, m, level):
     horiz = (x1 - x0) >= (y1 - y0)
     a0, a1 = (x0, x1) if horiz else (y0, y1)
@@ -893,27 +893,97 @@ vanity(0.22, 4.6, 0.68, 5.3, z, top_m=M['trav'], name='nb_van')
 mirror_panel(0.215, 4.7, 0.22, 5.2, z + 1.05, z + 1.95, 'nb_mir')
 wc(1.0, 5.48, z, 'S', 'nbwc')
 shower_glass(0.2, 4.15, 1.0, 4.16, z)
-# --- kids room (x 8.1-10.9, y 4.5-7.9): pastel yellow + ivory wainscoting + natural oak
+# --- kids room (x 8.1-10.9, y 4.5-7.9): client reference (baby room) in soft pastel yellow instead of pink
 kz = z
 KOPS = {'N': [(8.5, 10.2, 0.9, 2.4)], 'S': [(9.75, 10.65, 0.0, 2.3)]}
-clad(8.1, 4.5, 10.9, 7.9, kz, 0.9, CEIL, M['yellow_wall'], KOPS, 'kid_wp')
-clad(8.1, 4.5, 10.9, 7.9, kz, 0.0, 0.9, M['ivory_panel'], KOPS, 'kid_wains', t=0.03)
-clad(8.08, 4.48, 10.92, 7.92, kz, 0.88, 0.93, M['ivory_panel'], KOPS, 'kid_rail', t=0.05)
-# rounded single bed with arched upholstered headboard against west wall
-box('kbed_frame', 8.15, 5.6, kz + 0.1, 10.15, 6.55, kz + 0.32, M['oak_light'], 0.06)
-box('kbed_matt', 8.2, 5.63, kz + 0.32, 10.1, 6.52, kz + 0.52, M['linen_ivory'], 0.06)
-box('kbed_duvet', 8.8, 5.58, kz + 0.48, 10.14, 6.57, kz + 0.58, M['yellow'], 0.06)
-cyl('kbed_hb', 8.16, 6.075, kz + 0.1, kz + 1.25, 0.55, M['yellow'], bevel=0.05).scale = (0.12, 1, 1)
-box('kbed_pillow', 8.25, 5.75, kz + 0.52, 8.6, 6.4, kz + 0.72, M['linen_ivory'], 0.07)
-cyl('knight', 8.4, 5.2, kz, kz + 0.5, 0.22, M['oak_light'], bevel=0.04)
-sphere('klamp', 8.4, 5.2, kz + 0.68, 0.14, M['lamp'])
-joinery_wall(8.12, 7.3, 9.9, 7.86, kz, kz + 2.3, M['ivory_panel'], 'kward', panel=0.6)
-cyl('krug', 9.7, 5.4, kz, kz + 0.012, 0.85, M['wool_rug'])
-cyl('kpouf', 10.35, 7.05, kz, kz + 0.38, 0.28, M['yellow'], bevel=0.1)
-for o in lounge_chair(10.2, 6.6, 120, M['boucle'], 'kchair'):
-    o.location.z += kz
-curtain(8.4, 7.8, 10.3, 7.8, kz + 0.02, kz + 2.95, M['yellow'], 'kcurt')
-sphere('kpend', 9.5, 6.2, kz + CEIL - 0.6, 0.28, M['lamp'], 1, 1, 0.7)
+
+
+def img_mat(name, file, size, rough=0.8):
+    m_, N_, L_ = node_mat(name)
+    b_ = N_['Principled BSDF']
+    t_ = N_.new('ShaderNodeTexImage')
+    t_.image = bpy.data.images.load(os.path.join(IMG, file))
+    t_.projection = 'BOX'
+    tc_ = N_.new('ShaderNodeTexCoord')
+    mp_ = N_.new('ShaderNodeMapping')
+    mp_.inputs['Scale'].default_value = (1 / size, 1 / size, 1 / size)
+    L_.new(tc_.outputs['Object'], mp_.inputs['Vector'])
+    L_.new(mp_.outputs['Vector'], t_.inputs['Vector'])
+    L_.new(t_.outputs['Color'], b_.inputs['Base Color'])
+    b_.inputs['Roughness'].default_value = rough
+    return m_
+
+
+KWP = img_mat('kids_wallpaper', 'wallpaper_kids_yellow.png', 0.9)
+KYEL = mat('kids_panel_yellow', '#F0E3B4', 0.55)
+KYEL2 = mat('kids_panel_groove', '#E0CF98', 0.6)
+KCREAM = mat('kids_cream', '#EFE7D8', 0.95, sheen=0.5)
+KYFAB = mat('kids_yellow_fabric', '#EFD27E', 0.9, sheen=0.4)
+clad(8.1, 4.5, 10.9, 7.9, kz, 1.1, CEIL, KWP, KOPS, 'kid_wp')
+clad(8.1, 4.5, 10.9, 7.9, kz, 0.0, 1.1, KYEL, KOPS, 'kid_wains', t=0.03)
+# vertical grooves on the wainscot + warm LED strip on its top edge
+for x in [8.1 + 0.2 * i for i in range(1, 14)]:
+    if not (8.5 < x < 10.2):
+        box('kid_groove', x - 0.004, 7.86, kz + 0.1, x + 0.004, 7.871, kz + 1.08, KYEL2)
+for y in [4.5 + 0.2 * i for i in range(1, 17)]:
+    box('kid_groove', 8.13, y - 0.004, kz + 0.1, 8.141, y + 0.004, kz + 1.08, KYEL2)
+    box('kid_groove', 10.859, y - 0.004, kz + 0.1, 10.87, y + 0.004, kz + 1.08, KYEL2)
+clad(8.08, 4.48, 10.92, 7.92, kz, 1.1, 1.13, KYEL, KOPS, 'kid_cap', t=0.06)
+clad(8.07, 4.47, 10.93, 7.93, kz, 1.13, 1.136, M['led'], KOPS, 'kid_led', t=0.05)
+# tray ceiling with hidden cove light
+for (x0, y0, x1, y1) in [(8.1, 4.5, 10.9, 4.95), (8.1, 7.45, 10.9, 7.9), (8.1, 4.95, 8.55, 7.45), (10.45, 4.95, 10.9, 7.45)]:
+    box('kid_tray', x0, y0, kz + CEIL - 0.22, x1, y1, kz + CEIL, M['ceiling'])
+box('kid_tray_led', 8.55, 4.95, kz + CEIL - 0.225, 10.45, 7.45, kz + CEIL - 0.22, M['led']) if False else None
+cove(8.6, 5.0, 10.4, 7.4, kz + CEIL, 30)
+for (x, y) in [(8.33, 5.3), (8.33, 7.1), (10.67, 5.3), (10.67, 7.1)]:
+    downlight(x, y, kz + CEIL - 0.22)
+# daybed with cloud headboard along the east wall
+box('kbed_base', 9.95, 5.35, kz + 0.02, 10.86, 7.33, kz + 0.42, KCREAM, 0.06)
+box('kbed_side', 10.74, 5.35, kz + 0.02, 10.86, 7.33, kz + 0.72, KCREAM, 0.05)
+box('kbed_matt', 10.0, 5.4, kz + 0.42, 10.74, 7.3, kz + 0.58, M['linen_ivory'], 0.05)
+for (yy, zz, rr) in [(7.4, 0.62, 0.28), (7.4, 0.95, 0.24), (7.4, 1.12, 0.17)]:
+    for xx in (10.13, 10.43, 10.7):
+        o = cyl('kbed_cloud', 0, 0, 0, 0.14, rr, KCREAM, bevel=0.04)
+        o.rotation_euler = (math.radians(90), 0, 0)
+        o.location = (xx, yy, kz + zz)
+box('kbed_throw', 9.97, 5.55, kz + 0.57, 10.76, 6.05, kz + 0.61, KYFAB, 0.01)
+box('kbed_pill1', 10.1, 6.95, kz + 0.58, 10.7, 7.25, kz + 0.82, M['linen_ivory'], 0.07)
+box('kbed_pill2', 10.2, 6.75, kz + 0.58, 10.65, 6.97, kz + 0.78, KYFAB, 0.07)
+sphere('kbed_star', 10.2, 6.6, kz + 0.66, 0.1, KYFAB, 1, 0.5, 1)
+# nightstand + mushroom lamp near the window corner
+box('kns', 10.4, 7.42, kz, 10.86, 7.86, kz + 0.52, M['oak_light'], 0.02)
+cyl('klamp_stem', 10.63, 7.64, kz + 0.52, kz + 0.66, 0.035, KYFAB)
+sphere('klamp_cap', 10.63, 7.64, kz + 0.7, 0.11, M['lamp'], 1, 1, 0.6)
+# low open oak cubby shelf with yellow baskets on the west wall
+box('kshelf', 8.14, 5.1, kz, 8.52, 6.95, kz + 0.78, M['oak_light'], 0.01)
+for i in range(4):
+    for j in range(2):
+        yy = 5.18 + i * 0.44
+        zz = kz + 0.06 + j * 0.37
+        box('kbasket', 8.2, yy, zz, 8.5, yy + 0.36, zz + 0.25, KYFAB if (i + j) % 2 else KCREAM, 0.02)
+cyl('kvase', 8.33, 5.35, kz + 0.78, kz + 0.98, 0.07, KYFAB)
+sphere('kflowers', 8.33, 5.35, kz + 1.05, 0.11, M['plant'])
+sphere('kstar_light', 8.33, 6.7, kz + 0.88, 0.09, M['led'], 1, 0.4, 1)
+# floating shelf + frames
+box('kfshelf', 8.12, 5.3, kz + 1.6, 8.34, 6.3, kz + 1.63, M['oak_light'])
+box('kframe1', 8.14, 5.5, kz + 1.63, 8.17, 5.85, kz + 2.05, M['oak_light'])
+box('kframe1i', 8.172, 5.53, kz + 1.66, 8.175, 5.82, kz + 2.02, KCREAM)
+for (ya, yb, za, zb) in [(5.7, 6.1, 1.45, 1.95), (6.25, 6.7, 1.4, 2.0)]:
+    box('kframe', 10.84, ya, kz + za, 10.87, yb, kz + zb, M['oak_light'])
+    box('kframe_in', 10.835, ya + 0.04, kz + za + 0.04, 10.84, yb - 0.04, kz + zb - 0.04, KCREAM)
+    sphere('kframe_heart', 10.833, (ya + yb) / 2, kz + (za + zb) / 2, 0.05, KYFAB, 0.2, 1, 1)
+# curtains: yellow side panels + sheer centre
+curtain(8.25, 7.8, 8.7, 7.8, kz + 0.02, kz + CEIL - 0.24, KYFAB, 'kcurtL')
+curtain(10.0, 7.8, 10.45, 7.8, kz + 0.02, kz + CEIL - 0.24, KYFAB, 'kcurtR')
+curtain(8.7, 7.84, 10.0, 7.84, kz + 0.02, kz + CEIL - 0.24, M['sheer'], 'ksheer')
+# cream rug with soft yellow dots, basket with plush
+rug(8.7, 4.85, 9.9, 7.2, kz, M['linen_ivory'], 'krug')
+import random as _kr
+_k = _kr.Random(5)
+for j in range(26):
+    cyl('krug_dot', 8.8 + _k.random() * 1.0, 4.95 + _k.random() * 2.15, kz + 0.014, kz + 0.016, 0.045, KYFAB, verts=16)
+cyl('kbasket_toy', 8.45, 4.85, kz, kz + 0.4, 0.22, KCREAM, bevel=0.03)
+sphere('kplush', 8.45, 4.85, kz + 0.48, 0.14, M['linen_ivory'])
 # --- master vestibule (x 11.1-12.7, y 4.5-5.45): dressing niche
 joinery_wall(11.12, 4.5, 11.55, 5.45, z, z + 2.4, M['oak'], 'vest_ward', panel=0.48)
 # --- master bath (x 11.1-12.7, y 5.6-7.9)

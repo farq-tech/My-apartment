@@ -26,6 +26,8 @@ scn.render.filepath = sys.argv[sys.argv.index('--') + 1]
 print('ENGINE', scn.render.engine, flush=True)
 fr = os.environ.get('FRAMES')
 if fr:
+    if hasattr(scn.render.image_settings, 'media_type'):
+        scn.render.image_settings.media_type = 'IMAGE'
     scn.render.image_settings.file_format = 'JPEG'
     base = scn.render.filepath
     for f in fr.split(','):

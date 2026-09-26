@@ -8,7 +8,7 @@ BASE = ('Turn this 3D render into an ultra photorealistic architectural interior
         'do not add, remove, replace or move anything; only make materials, light and textures photographic. '
         'Windows stay flush windows with a solid wall below the sill: no balconies, no railings, no sliding doors, no city towers outside. '
         'Keep the floor exactly as it is: light warm grey marble-look 120x60 ceramic tiles with soft subtle veining and thin joints, satin finish. '
-        'Light greige matte painted walls, smoked oak joinery, satin bronze details, bright soft natural daylight, '
+        'Matte painted walls in warm mushroom taupe exactly as in the render, smoked oak joinery, satin bronze details, bright soft natural daylight, '
         'realistic shadows and reflections, calm quiet-luxury styling, high-end interior photography. ')
 
 ROOM = {
@@ -36,9 +36,11 @@ ROOM = {
     'MasterBath': 'Master bathroom with floors and walls fully clad in the exact same travertine vein-cut tiles '
                   '(keep the travertine pattern), floating vanity with travertine top and white basin, bronze '
                   'framed mirror, wall-hung toilet, frameless glass shower, lit shower niche, brushed bronze fittings.',
-    'ChildBedroom': "Child bedroom: soft pastel yellow wallpaper above warm ivory wainscoting panels, cream and "
-                    "natural light oak, single bed with rounded pastel yellow upholstered headboard, ivory wardrobe, "
-                    "round wool rug, yellow pouf, soft yellow curtains, rounded child-safe furniture, calm premium feeling.",
+    'ChildBedroom': 'Baby girl bedroom in soft pastel yellow and warm ivory: soft yellow vertical-panel wainscoting with a hidden '
+                    'warm LED strip on top, ivory wallpaper with small yellow rainbow and cloud motifs, cream daybed with a '
+                    'cloud-shaped upholstered headboard, yellow throw and cushions, light oak nightstand with a mushroom lamp, '
+                    'low light oak cubby shelf with yellow and cream baskets, floating oak shelf with frames, yellow curtains with '
+                    'white sheer, cream rug with pastel yellow dots, tray ceiling with cove light, calm premium feeling.',
     'Office': 'Home office and library: walnut library wall with lit shelves and books, walnut desk, boucle desk '
               'chair, linen guest chairs, sofa and round travertine table, wool rug, sheer curtains.',
     'OfficeBath': 'Bathroom with floors and walls fully clad in the exact same travertine vein-cut tiles (keep the '
