@@ -59,44 +59,36 @@ def node_mat(name):
 
 
 def tile_floor_mat():
-    """Locked main floor: plain matte light near-neutral grey (#D1CDCD measured), 1.20 x 0.60 rectified
-    tiles, 2 mm dark joints, fine speckle."""
+    """Locked main floor: client's 120 x 60 marble-look ceramic (texture from the client's showroom photo,
+    exposure normalised between the showroom and the sunlit site photo), 2 mm joints."""
     m, N, L = node_mat('floor_tile')
     b = N['Principled BSDF']
+    tex = N.new('ShaderNodeTexImage')
+    tex.image = bpy.data.images.load(os.path.join(IMG, 'floor_marble.jpg'))
+    tex.projection = 'BOX'
     tc = N.new('ShaderNodeTexCoord')
     mp = N.new('ShaderNodeMapping')
-    mp.inputs['Scale'].default_value = (1 / 1.2, 1 / 0.6, 1)
+    mp.inputs['Scale'].default_value = (1 / 0.6, 1 / 0.6, 1 / 0.6)
     L.new(tc.outputs['Object'], mp.inputs['Vector'])
+    L.new(mp.outputs['Vector'], tex.inputs['Vector'])
     br = N.new('ShaderNodeTexBrick')
     br.offset = 0.0
     br.inputs['Scale'].default_value = 1.0
     br.inputs['Mortar Size'].default_value = 0.0018
-    br.inputs['Brick Width'].default_value = 1.0
-    br.inputs['Row Height'].default_value = 1.0
-    br.inputs['Color1'].default_value = hexc('#D1CDCD')
-    br.inputs['Color2'].default_value = hexc('#CFCBCA')
-    br.inputs['Mortar'].default_value = hexc('#8E8B89')
-    br.inputs['Bias'].default_value = 0.0
-    L.new(mp.outputs['Vector'], br.inputs['Vector'])
-    nz = N.new('ShaderNodeTexNoise')
-    nz.inputs['Scale'].default_value = 900
-    nz.inputs['Detail'].default_value = 2
-    L.new(tc.outputs['Object'], nz.inputs['Vector'])
-    ramp = N.new('ShaderNodeValToRGB')
-    ramp.color_ramp.elements[0].position = 0.72
-    ramp.color_ramp.elements[0].color = (1, 1, 1, 1)
-    ramp.color_ramp.elements[1].position = 0.78
-    ramp.color_ramp.elements[1].color = (0.82, 0.81, 0.80, 1)
-    L.new(nz.outputs['Fac'], ramp.inputs['Fac'])
+    br.inputs['Brick Width'].default_value = 1.2
+    br.inputs['Row Height'].default_value = 0.6
+    br.inputs['Color1'].default_value = (1, 1, 1, 1)
+    br.inputs['Color2'].default_value = (0.985, 0.985, 0.98, 1)
+    br.inputs['Mortar'].default_value = (0.55, 0.53, 0.5, 1)
+    L.new(tc.outputs['Object'], br.inputs['Vector'])
     mix = N.new('ShaderNodeMix')
     mix.data_type = 'RGBA'
     mix.blend_type = 'MULTIPLY'
     mix.inputs['Factor'].default_value = 1.0
-    L.new(br.outputs['Color'], mix.inputs[6])
-    L.new(ramp.outputs['Color'], mix.inputs[7])
+    L.new(tex.outputs['Color'], mix.inputs[6])
+    L.new(br.outputs['Color'], mix.inputs[7])
     L.new(mix.outputs[2], b.inputs['Base Color'])
-    b.inputs['Roughness'].default_value = 0.42
-    b.inputs['Coat Weight'].default_value = 0.0
+    b.inputs['Roughness'].default_value = 0.3
     return m
 
 
@@ -105,7 +97,7 @@ def travertine_mat():
     m, N, L = node_mat('travertine')
     b = N['Principled BSDF']
     tex = N.new('ShaderNodeTexImage')
-    tex.image = bpy.data.images.load(os.path.join(IMG, 'tile_sample.jpg'))
+    tex.image = bpy.data.images.load(os.path.join(IMG, 'travertine_clean.jpg'))
     tex.projection = 'BOX'
     tex.projection_blend = 0.15
     tc = N.new('ShaderNodeTexCoord')
@@ -136,25 +128,27 @@ def travertine_mat():
 
 
 def wood_mat(name, color, scale=1.0):
+    """straight-grain veneer: noise stretched along the board length (x)."""
     m, N, L = node_mat(name)
     b = N['Principled BSDF']
     tc = N.new('ShaderNodeTexCoord')
     mp = N.new('ShaderNodeMapping')
-    mp.inputs['Scale'].default_value = (1.5 * scale, 40 * scale, 1.5 * scale)
+    mp.inputs['Scale'].default_value = (0.6 * scale, 60 * scale, 60 * scale)
     L.new(tc.outputs['Object'], mp.inputs['Vector'])
-    wv = N.new('ShaderNodeTexWave')
-    wv.wave_type = 'BANDS'
-    wv.inputs['Scale'].default_value = 3.0
-    wv.inputs['Distortion'].default_value = 6.0
-    wv.inputs['Detail'].default_value = 4.0
-    L.new(mp.outputs['Vector'], wv.inputs['Vector'])
+    nz = N.new('ShaderNodeTexNoise')
+    nz.inputs['Scale'].default_value = 2.0
+    nz.inputs['Detail'].default_value = 8.0
+    nz.inputs['Roughness'].default_value = 0.6
+    L.new(mp.outputs['Vector'], nz.inputs['Vector'])
     ramp = N.new('ShaderNodeValToRGB')
     c = hexc(color)
-    ramp.color_ramp.elements[0].color = (c[0] * 0.78, c[1] * 0.78, c[2] * 0.78, 1)
-    ramp.color_ramp.elements[1].color = (c[0] * 1.12, c[1] * 1.12, c[2] * 1.12, 1)
-    L.new(wv.outputs['Fac'], ramp.inputs['Fac'])
+    ramp.color_ramp.elements[0].position = 0.35
+    ramp.color_ramp.elements[0].color = (c[0] * 0.82, c[1] * 0.82, c[2] * 0.82, 1)
+    ramp.color_ramp.elements[1].position = 0.65
+    ramp.color_ramp.elements[1].color = (c[0] * 1.08, c[1] * 1.08, c[2] * 1.08, 1)
+    L.new(nz.outputs['Fac'], ramp.inputs['Fac'])
     L.new(ramp.outputs['Color'], b.inputs['Base Color'])
-    b.inputs['Roughness'].default_value = 0.48
+    b.inputs['Roughness'].default_value = 0.5
     return m
 
 
@@ -582,11 +576,21 @@ def curtain(x0, y0, x1, y1, z0, z1, m=None, name='curt'):
 
 
 def plant(x, y, z=0.0, h=1.6, name='plant'):
-    cyl(name + '_pot', x, y, z, z + 0.45, 0.24, M['pot'], bevel=0.02)
-    for k in range(7):
-        a = k * 2 * math.pi / 7
-        sphere(name + '_leaf', x + 0.18 * math.cos(a), y + 0.18 * math.sin(a), z + 0.6 + (k % 3) * (h - 0.6) / 3,
-               0.28, M['plant'], 1.0, 0.6, 0.9)
+    """potted olive tree proxy: stone pot, slim trunk, loose canopy of small leaves."""
+    import random
+    rnd = random.Random(int(x * 100 + y * 10))
+    cyl(name + '_pot', x, y, z, z + 0.42, 0.22, M['pot'], bevel=0.02)
+    cyl(name + '_soil', x, y, z + 0.40, z + 0.41, 0.2, M['walnut'])
+    cyl(name + '_trunk', x, y, z + 0.4, z + h * 0.62, 0.025, M['walnut'], verts=12)
+    for k in range(3):
+        a = k * 2.1
+        box(name + '_br', x, y, z + h * 0.55, x + 0.25 * math.cos(a), y + 0.25 * math.sin(a), z + h * 0.56 + 0.2, M['walnut'])
+    for k in range(140):
+        r = 0.42 * rnd.random() ** 0.5
+        a = rnd.random() * 6.283
+        zz = z + h * 0.58 + rnd.random() * h * 0.42
+        o = sphere(name + '_lf', x + r * math.cos(a), y + r * math.sin(a), zz, 0.045, M['plant'], 1.0, 0.35, 0.18)
+        o.rotation_euler = (rnd.random() * 3, rnd.random() * 3, rnd.random() * 3)
 
 
 def joinery_wall(x0, y0, x1, y1, z0, z1, m, name='join', panel=0.6, gap=0.006):
@@ -704,16 +708,26 @@ box('din_top', din_cx - 1.3, din_cy - 0.55, 0.72, din_cx + 1.3, din_cy + 0.55, 0
 box('din_leg1', din_cx - 0.85, din_cy - 0.2, 0.0, din_cx - 0.55, din_cy + 0.2, 0.72, M['oak'], 0.02)
 box('din_leg2', din_cx + 0.55, din_cy - 0.2, 0.0, din_cx + 0.85, din_cy + 0.2, 0.72, M['oak'], 0.02)
 rug(din_cx - 2.1, din_cy - 1.6, din_cx + 2.1, din_cy + 1.6, m=M['rug_taupe'], name='din_rug')
+def dining_chair(cx, cy, face, name='dch'):
+    """face = unit vector the sitter looks toward (table)."""
+    fx, fy = face
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            box(name + '_leg', cx + sx * 0.19 - 0.015, cy + sy * 0.19 - 0.015, 0.0, cx + sx * 0.19 + 0.015,
+                cy + sy * 0.19 + 0.015, 0.44, M['oak'])
+    box(name + '_seat', cx - 0.23, cy - 0.23, 0.44, cx + 0.23, cy + 0.23, 0.5, M['linen'], 0.03)
+    bx, by = cx - fx * 0.21, cy - fy * 0.21
+    if fx == 0:
+        box(name + '_back', bx - 0.23, by - 0.03, 0.52, bx + 0.23, by + 0.03, 0.86, M['linen'], 0.03)
+    else:
+        box(name + '_back', bx - 0.03, by - 0.23, 0.52, bx + 0.03, by + 0.23, 0.86, M['linen'], 0.03)
+
+
 for i in range(3):
     for side in (-1, 1):
-        cx = din_cx - 0.85 + i * 0.85
-        cy = din_cy + side * 0.82
-        box('dch_seat', cx - 0.24, cy - 0.24, 0.0, cx + 0.24, cy + 0.24, 0.46, M['linen'], 0.06)
-        box('dch_back', cx - 0.24, cy + side * 0.2 - 0.04, 0.46, cx + 0.24, cy + side * 0.2 + 0.04, 0.88, M['linen'], 0.04)
+        dining_chair(din_cx - 0.85 + i * 0.85, din_cy + side * 0.8, (0, -side))
 for side in (-1, 1):
-    cx = din_cx + side * 1.58
-    box('dch_seat', cx - 0.24, din_cy - 0.24, 0.0, cx + 0.24, din_cy + 0.24, 0.46, M['linen'], 0.06)
-    box('dch_back', cx + side * 0.2 - 0.04, din_cy - 0.24, 0.46, cx + side * 0.2 + 0.04, din_cy + 0.24, 0.88, M['linen'], 0.04)
+    dining_chair(din_cx + side * 1.55, din_cy, (-side, 0))
 linear_pendant(din_cx - 0.95, din_cx + 0.95, din_cy, CEIL, 1.3)
 curtain(7.75, 0.28, 10.35, 0.28, 0.02, 2.95, name='curt_din')
 # sideboard on bump wall
@@ -781,10 +795,15 @@ plant(5.75, 3.7, z, 1.7)
 # --- terrace / sunroom (x 0.2-5.2, y 0.2-3.0), glass roof
 box('planter_L', 0.2, 0.2, z, 0.75, 3.0, z + 0.55, M['trav'])
 box('planter_B', 0.75, 0.2, z, 5.2, 0.7, z + 0.55, M['trav'])
-for k in range(9):
-    sphere('shrub', 0.47, 0.5 + k * 0.3, z + 0.7, 0.24, M['plant'], 1, 1, 0.8)
-for k in range(14):
-    sphere('shrub', 0.9 + k * 0.31, 0.45, z + 0.7, 0.24, M['plant'], 1, 1, 0.8)
+import random as _r
+_g = _r.Random(3)
+for k in range(260):
+    if k % 2:
+        px, py = 0.25 + _g.random() * 0.45, 0.3 + _g.random() * 2.6
+    else:
+        px, py = 0.8 + _g.random() * 4.3, 0.25 + _g.random() * 0.4
+    o = sphere('shrub', px, py, z + 0.58 + _g.random() * 0.45, 0.06, M['plant'], 1.0, 0.4, 0.2)
+    o.rotation_euler = (_g.random() * 3, _g.random() * 3, _g.random() * 3)
 plant(4.8, 2.6, z, 2.0)
 for o in lounge_chair(1.9, 1.9, 200, M['linen'], 'tlc1'):
     o.location.z += z
@@ -921,7 +940,7 @@ for (x0, y0, x1, y1, h) in [(-40, -38, -10, -22, 16), (-6, -34, 14, -24, 12), (1
 # ---------------------------------------------------------------- render settings
 scn.render.engine = 'CYCLES'
 scn.cycles.device = 'CPU'
-scn.cycles.samples = int(os.environ.get('SAMPLES', '96'))
+scn.cycles.samples = int(os.environ.get('SAMPLES', '24'))
 scn.cycles.use_denoising = True
 scn.cycles.max_bounces = 8
 scn.cycles.diffuse_bounces = 4
@@ -929,11 +948,11 @@ scn.cycles.glossy_bounces = 4
 scn.cycles.transmission_bounces = 8
 scn.cycles.caustics_reflective = False
 scn.cycles.caustics_refractive = False
-scn.render.resolution_x = int(os.environ.get('RX', '1536'))
-scn.render.resolution_y = int(os.environ.get('RY', '1024'))
+scn.render.resolution_x = int(os.environ.get('RX', '1024'))
+scn.render.resolution_y = int(os.environ.get('RY', '683'))
 scn.view_settings.view_transform = 'AgX'
 scn.view_settings.look = 'AgX - Base Contrast'
-scn.view_settings.exposure = float(os.environ.get('EXPO', '0.6'))
+scn.view_settings.exposure = float(os.environ.get('EXPO', '-0.15'))
 scn.render.image_settings.file_format = 'JPEG'
 scn.render.image_settings.quality = 92
 
