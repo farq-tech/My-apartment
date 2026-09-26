@@ -56,7 +56,7 @@ if __name__ == '__main__':
     base, out = sys.argv[1], sys.argv[2]
     os.makedirs(out, exist_ok=True)
     here = os.path.dirname(os.path.abspath(__file__))
-    for f in sorted(os.listdir(base)):
+    for f in (sorted(os.listdir(base)) if os.path.isdir(base) else []):
         if not f.endswith('.jpg'):
             continue
         dst = os.path.join(out, f)
