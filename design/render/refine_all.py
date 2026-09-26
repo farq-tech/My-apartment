@@ -4,7 +4,9 @@ usage: python3 refine_all.py BASE_DIR OUT_DIR
 import os, sys, time, subprocess
 
 BASE = ('Turn this 3D render into an ultra photorealistic architectural interior photograph of a finished Riyadh apartment. '
-        'Keep the exact room geometry, camera angle, walls, doors, windows and every furniture position unchanged. '
+        'Keep the exact room geometry, camera angle, walls, doors, windows, ceiling and every furniture piece exactly as in the render: '
+        'do not add, remove, replace or move anything; only make materials, light and textures photographic. '
+        'Windows stay windows with their sill, no balconies or railings. '
         'Keep the floor exactly as it is: light warm grey marble-look 120x60 ceramic tiles with soft subtle veining and thin joints, satin finish. '
         'Light greige matte painted walls, smoked oak joinery, satin bronze details, bright soft natural daylight, '
         'realistic shadows and reflections, calm quiet-luxury styling, high-end interior photography. ')
@@ -35,9 +37,13 @@ ROOM = {
                   'framed mirror, wall-hung toilet, frameless glass shower, lit shower niche, brushed bronze fittings.',
     'ChildBedroom': "Child bedroom: soft pastel yellow wallpaper above warm ivory wainscoting panels, cream and "
                     "natural light oak, single bed with rounded pastel yellow upholstered headboard, ivory wardrobe, "
-                    "round wool rug, yellow pouf, soft yellow curtains, rounded child-safe furniture, calm premium feeling.",
-    'Office': 'Home office and library: walnut library wall with lit shelves and books, walnut desk, boucle desk '
-              'chair, linen guest chairs, sofa and round travertine table, wool rug, sheer curtains.',
+                    "round wool rug, yellow pouf, small oak desk, rounded child-safe furniture, calm premium feeling. The room has no window.",
+    'Office': 'Home office: walnut library wall with lit shelves and books, walnut desk under the window, boucle desk '
+              'chair, linen lounge chair, wool rug, sheer curtains.',
+    'MasterDressing': 'Master dressing and sitting area: full-height smoked oak wardrobes, oak dressing island with '
+                      'travertine top, full-length mirror, boucle lounge chair by the window, sheer curtains, wool rug.',
+    'ChildBath': 'Bathroom with floors and walls fully clad in the exact same travertine vein-cut tiles (keep the '
+                 'travertine pattern), floating vanity with travertine top, mirror, wall-hung toilet, bronze fittings.',
     'OfficeBath': 'Bathroom with floors and walls fully clad in the exact same travertine vein-cut tiles (keep the '
                   'travertine pattern), floating vanity with travertine top, mirror, wall-hung toilet, bronze fittings.',
     'GuestRoom': 'Compact guest bedroom: single bed with taupe linen headboard, oak nightstand, oak wardrobe, '

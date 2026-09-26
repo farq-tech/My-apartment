@@ -9,9 +9,10 @@ ROOMS = {
     'F1': [('01', 'StairHall', 'Stair Hall'), ('02', 'Living', 'Living & Reception'), ('03', 'Dining', 'Dining'),
            ('04', 'Kitchen', 'Kitchen'), ('05', 'Staircase', 'Staircase'), ('06', 'GuestWC', 'Guest WC')],
     'F2': [('01', 'Entrance', 'Entrance'), ('02', 'FamilyLounge', 'Family Lounge'), ('03', 'Terrace', 'Sunroom Terrace'),
-           ('04', 'MasterBedroom', 'Master Bedroom'), ('05', 'MasterBath', 'Master Bathroom'),
+           ('04', 'MasterBedroom', 'Master Bedroom'), ('04b', 'MasterBath', 'Master Bathroom'),
+           ('05', 'MasterDressing', 'Master Dressing & Sitting'),
            ('06', 'ChildBedroom', 'Child Bedroom'), ('07', 'Office', 'Office & Library'),
-           ('08', 'OfficeBath', 'Office Bathroom'), ('09', 'GuestRoom', 'Guest Room'), ('10', 'GuestBath', 'Guest Bathroom')],
+           ('08', 'ChildBath', 'Child Bathroom'), ('09', 'GuestRoom', 'Guest Room'), ('10', 'GuestBath', 'Guest Bathroom')],
 }
 FLOORS = [('F1', 'First Floor', 'الدور الأول'), ('F2', 'Second Floor', 'الدور الثاني')]
 
@@ -88,6 +89,7 @@ figcaption{{display:flex;justify-content:space-between}}
     الهندسة من المخطط: الجدران والأبواب والنوافذ والدرج مبنية من ملف DWG بالمتر، والكاميرات في مواقع حقيقية كما في مفتاح كل دور.
     الأرضية: البلاط الرئيسي المركب في كل المساحات عدا الحمامات، والترافرتين في الحمامات أرضيات وجدراناً.
     افتراضات غير موجودة في المخطط: ارتفاع السقف 3.00 م، وجلسات النوافذ، وباب الوحدة الرئيسي في ممر الدور الثاني.
+    توزيع الدور الثاني حسب تعديلك: الماستر = غرفة النوم القديمة + الجزء الشرقي من المكتب (ملابس وجلسة)، وغرفة الطفل = الجزء الغربي من المكتب مع حمامه، والمكتب = غرفة الأطفال القديمة. غرفة الطفل في المخطط بدون نافذة، ويلزم التأكد في الموقع.
     غرفة الطفل: صورة المرجع وكتالوج ورق الجدران 5144-1 لم يصلاني، والورق المستخدم أصفر هادئ مؤقت حتى يصل الكتالوج.
   </div>
 </div>

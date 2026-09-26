@@ -102,19 +102,18 @@ def travertine_mat():
     tex.projection_blend = 0.15
     tc = N.new('ShaderNodeTexCoord')
     mp = N.new('ShaderNodeMapping')
-    mp.inputs['Rotation'].default_value = (0, 0, math.radians(90))
-    mp.inputs['Scale'].default_value = (1 / 0.9, 1 / 0.9, 1 / 0.9)
+    mp.inputs['Scale'].default_value = (1 / 0.6, 1 / 0.6, 1 / 0.6)
     L.new(tc.outputs['Object'], mp.inputs['Vector'])
     L.new(mp.outputs['Vector'], tex.inputs['Vector'])
     br = N.new('ShaderNodeTexBrick')
     br.offset = 0.0
     br.inputs['Mortar Size'].default_value = 0.0015
-    br.inputs['Brick Width'].default_value = 1.2
-    br.inputs['Row Height'].default_value = 0.6
+    br.inputs['Brick Width'].default_value = 0.6
+    br.inputs['Row Height'].default_value = 1.2
     br.inputs['Scale'].default_value = 1.0
-    br.inputs['Color1'].default_value = (1, 1, 1, 1)
-    br.inputs['Color2'].default_value = (1, 1, 1, 1)
-    br.inputs['Mortar'].default_value = (0.62, 0.6, 0.57, 1)
+    br.inputs['Color1'].default_value = (1.15, 1.15, 1.15, 1)
+    br.inputs['Color2'].default_value = (1.12, 1.12, 1.12, 1)
+    br.inputs['Mortar'].default_value = (0.7, 0.68, 0.65, 1)
     L.new(tc.outputs['Object'], br.inputs['Vector'])
     mix = N.new('ShaderNodeMix')
     mix.data_type = 'RGBA'
@@ -174,6 +173,27 @@ def wallpaper_mat():
     return m
 
 
+def glass_mat():
+    m, N, L = node_mat('glass')
+    out = N['Material Output']
+    N.remove(N['Principled BSDF'])
+    g = N.new('ShaderNodeBsdfGlass')
+    g.inputs['Roughness'].default_value = 0.0
+    g.inputs['IOR'].default_value = 1.45
+    t = N.new('ShaderNodeBsdfTransparent')
+    lp = N.new('ShaderNodeLightPath')
+    mx = N.new('ShaderNodeMixShader')
+    mxf = N.new('ShaderNodeMath')
+    mxf.operation = 'MAXIMUM'
+    L.new(lp.outputs['Is Shadow Ray'], mxf.inputs[0])
+    L.new(lp.outputs['Is Diffuse Ray'], mxf.inputs[1])
+    L.new(mxf.outputs[0], mx.inputs['Fac'])
+    L.new(g.outputs[0], mx.inputs[1])
+    L.new(t.outputs[0], mx.inputs[2])
+    L.new(mx.outputs[0], out.inputs['Surface'])
+    return m
+
+
 M = dict(
     wall=mat('wall', '#D9D3C8', 0.85),
     ceiling=mat('ceiling', '#EFEBE4', 0.9),
@@ -190,7 +210,7 @@ M = dict(
     wool_rug=mat('wool_rug', '#D8CFC1', 1.0, sheen=0.4),
     rug_taupe=mat('rug_taupe', '#B5A796', 1.0, sheen=0.4),
     stone_top=mat('stone_top', '#E9E4DB', 0.25, coat=0.3),
-    glass=mat('glass', '#FFFFFF', 0.02, trans=1.0),
+    glass=glass_mat(),
     sheer=mat('sheer', '#F4F0E8', 0.9, trans=0.65),
     dark=mat('dark_screen', '#111111', 0.15, coat=0.6),
     white_ceramic=mat('ceramic', '#F5F3EF', 0.12, coat=0.5),
@@ -734,7 +754,7 @@ curtain(7.75, 0.28, 10.35, 0.28, 0.02, 2.95, name='curt_din')
 box('sideboard', 12.05, 0.9, 0.0, 12.5, 3.5, 0.8, M['oak'], 0.01)
 box('sideboard_top', 12.03, 0.88, 0.8, 12.5, 3.52, 0.83, M['trav'])
 art(12.47, 1.3, 12.5, 3.1, 1.25, 2.35, M['art'])
-plant(11.7, 3.75, h=1.7)
+plant(12.15, 0.55, h=1.7)
 # --- kitchen (x 8.2-11.0, y 4.25-7.9)
 box('k_base_top', 8.2, 7.3, 0.0, 10.4, 7.9, 0.88, M['oak'], 0.005)
 box('k_counter', 8.2, 7.28, 0.88, 10.4, 7.9, 0.92, M['stone_top'])
@@ -772,7 +792,6 @@ z = L2Z
 # --- entrance corridor (x 5.35-6.85, y 4.5-7.9); door at top x 5.45-6.45
 joinery_wall(6.45, 4.6, 6.85, 6.85, z, z + 2.4, M['oak'], 'shoe', panel=0.55)
 box('shoe_top', 6.45, 4.6, z + 2.4, 6.85, 6.85, z + CEIL, M['wall'])
-box('shoe_niche', 6.4, 5.4, z + 0.95, 6.46, 6.1, z + 1.35, M['led'])
 box('entry_bench', 6.45, 6.95, z, 6.85, 7.75, z + 0.45, M['boucle'], 0.04)
 rug(5.55, 6.3, 6.35, 7.7, z, M['rug_taupe'], 'entry_rug')
 for yy in (5.2, 6.2, 7.2):
@@ -791,7 +810,7 @@ joinery_wall(10.8, 0.5, 10.9, 3.2, z + 0.48, z + CEIL, M['oak'], 'tv2wall', pane
 box('tv2', 10.76, 0.95, z + 1.05, 10.8, 2.6, z + 1.98, M['dark'])
 curtain(8.15, 0.28, 10.65, 0.28, z + 0.02, z + 2.95, name='curt_fam')
 pendant_ring(8.3, 2.05, z + CEIL, 0.6, 0.9, 'pend2')
-plant(5.75, 3.7, z, 1.7)
+plant(5.75, 0.55, z, 1.7)
 # --- terrace / sunroom (x 0.2-5.2, y 0.2-3.0), glass roof
 box('planter_L', 0.2, 0.2, z, 0.75, 3.0, z + 0.55, M['trav'])
 box('planter_B', 0.75, 0.2, z, 5.2, 0.7, z + 0.55, M['trav'])
@@ -804,7 +823,7 @@ for k in range(260):
         px, py = 0.8 + _g.random() * 4.3, 0.25 + _g.random() * 0.4
     o = sphere('shrub', px, py, z + 0.58 + _g.random() * 0.45, 0.06, M['plant'], 1.0, 0.4, 0.2)
     o.rotation_euler = (_g.random() * 3, _g.random() * 3, _g.random() * 3)
-plant(4.8, 2.6, z, 2.0)
+plant(4.8, 0.98, z, 2.0)
 for o in lounge_chair(1.9, 1.9, 200, M['linen'], 'tlc1'):
     o.location.z += z
 for o in lounge_chair(3.4, 1.9, 160, M['linen'], 'tlc2'):
@@ -822,27 +841,25 @@ vanity(0.22, 4.6, 0.68, 5.3, z, top_m=M['trav'], name='nb_van')
 mirror_panel(0.215, 4.7, 0.22, 5.2, z + 1.05, z + 1.95, 'nb_mir')
 wc(1.0, 5.48, z, 'S', 'nbwc')
 shower_glass(0.2, 4.15, 1.0, 4.16, z)
-# --- kids room (x 8.1-10.9, y 4.5-7.9): pastel yellow + ivory wainscoting + natural oak
-kz = z
-KOPS = {'N': [(8.5, 10.2, 0.9, 2.4)], 'S': [(9.75, 10.65, 0.0, 2.3)]}
-clad(8.1, 4.5, 10.9, 7.9, kz, 0.9, CEIL, M['yellow_wall'], KOPS, 'kid_wp')
-clad(8.1, 4.5, 10.9, 7.9, kz, 0.0, 0.9, M['ivory_panel'], KOPS, 'kid_wains', t=0.03)
-clad(8.08, 4.48, 10.92, 7.92, kz, 0.88, 0.93, M['ivory_panel'], KOPS, 'kid_rail', t=0.05)
-# rounded single bed with arched upholstered headboard against west wall
-box('kbed_frame', 8.15, 5.6, kz + 0.1, 10.15, 6.55, kz + 0.32, M['oak_light'], 0.06)
-box('kbed_matt', 8.2, 5.63, kz + 0.32, 10.1, 6.52, kz + 0.52, M['linen_ivory'], 0.06)
-box('kbed_duvet', 8.8, 5.58, kz + 0.48, 10.14, 6.57, kz + 0.58, M['yellow'], 0.06)
-cyl('kbed_hb', 8.16, 6.075, kz + 0.1, kz + 1.25, 0.55, M['yellow'], bevel=0.05).scale = (0.12, 1, 1)
-box('kbed_pillow', 8.25, 5.75, kz + 0.52, 8.6, 6.4, kz + 0.72, M['linen_ivory'], 0.07)
-cyl('knight', 8.4, 5.2, kz, kz + 0.5, 0.22, M['oak_light'], bevel=0.04)
-sphere('klamp', 8.4, 5.2, kz + 0.68, 0.14, M['lamp'])
-joinery_wall(8.12, 7.3, 9.9, 7.86, kz, kz + 2.3, M['ivory_panel'], 'kward', panel=0.6)
-cyl('krug', 9.7, 5.4, kz, kz + 0.012, 0.85, M['wool_rug'])
-cyl('kpouf', 10.35, 7.05, kz, kz + 0.38, 0.28, M['yellow'], bevel=0.1)
-for o in lounge_chair(10.2, 6.6, 120, M['boucle'], 'kchair'):
-    o.location.z += kz
-curtain(8.4, 7.8, 10.3, 7.8, kz + 0.02, kz + 2.95, M['yellow'], 'kcurt')
-sphere('kpend', 9.5, 6.2, kz + CEIL - 0.6, 0.28, M['lamp'], 1, 1, 0.7)
+# --- office (old kids room, x 8.1-10.9, y 4.5-7.9): walnut library, desk under window
+joinery_wall(8.12, 4.6, 8.55, 7.85, z, z + CEIL - 0.05, M['walnut'], 'library', panel=0.8)
+for sh in range(5):
+    zz = z + 0.45 + sh * 0.48
+    box('shelf_led', 8.5, 4.7, zz, 8.55, 7.75, zz + 0.005, M['led'])
+    for k in range(10):
+        by = 4.8 + k * 0.3
+        box('books', 8.18, by, zz + 0.01, 8.48, by + 0.18, zz + 0.3, M['linen'] if k % 2 else M['boucle'])
+box('desk', 8.8, 7.15, z + 0.74, 10.6, 7.85, z + 0.78, M['walnut'], 0.01)
+box('desk_ped', 10.0, 7.2, z, 10.55, 7.8, z + 0.74, M['walnut'], 0.01)
+box('desk_leg', 8.85, 7.2, z, 8.95, 7.8, z + 0.74, M['bronze'])
+box('desk_chair', 9.45, 6.45, z, 9.95, 6.95, z + 0.5, M['boucle'], 0.08)
+box('desk_chair_b', 9.45, 6.35, z + 0.5, 9.95, 6.45, z + 1.1, M['boucle'], 0.04)
+for o in lounge_chair(10.25, 5.25, 200, M['linen'], 'ochair'):
+    o.location.z += z
+box('o_side', 9.55, 4.7, z, 9.95, 5.1, z + 0.5, M['oak'], 0.02)
+rug(8.8, 4.8, 10.7, 6.9, z, M['rug_taupe'], 'orug')
+curtain(8.4, 7.8, 10.3, 7.8, z + 0.02, z + 2.95, name='curt_off')
+linear_pendant(9.0, 10.3, 7.0, z + CEIL, 0.9, 'off_lin')
 # --- master vestibule (x 11.1-12.7, y 4.5-5.45): dressing niche
 joinery_wall(11.12, 4.5, 11.55, 5.45, z, z + 2.4, M['oak'], 'vest_ward', panel=0.48)
 # --- master bath (x 11.1-12.7, y 5.6-7.9)
@@ -866,32 +883,43 @@ joinery_wall(12.92, 5.5, 13.5, 7.3, z, z + 2.6, M['oak'], 'm_ward_W', panel=0.6)
 box('m_ward_top', 12.92, 5.5, z + 2.6, 15.4, 7.9, z + CEIL, M['wall'])
 box('dress_tbl', 14.2, 4.52, z + 0.72, 15.4, 5.0, z + 0.76, M['oak'], 0.01)
 mirror_panel(14.4, 4.515, 15.2, 4.52, z + 1.0, z + 2.0, 'dress_mir')
-for o in lounge_chair(19.0, 4.95, 210, M['boucle'], 'mchair'):
-    o.location.z += z
 curtain(19.72, 4.55, 19.72, 7.85, z + 0.02, z + 2.95, name='curt_m')
 cove(15.9, 5.0, 19.3, 7.4, z + CEIL, 25)
-# --- office (x 12.9-19.8, y 0.2-4.3): library + desk facing door
-joinery_wall(13.1, 0.2, 16.4, 0.6, z, z + CEIL - 0.05, M['walnut'], 'library', panel=0.8)
-for sh in range(5):
-    zz = z + 0.45 + sh * 0.48
-    box('shelf_led', 13.2, 0.55, zz, 16.3, 0.6, zz + 0.005, M['led'])
-    for k in range(10):
-        bx = 13.3 + k * 0.3
-        box('books', bx, 0.25, zz + 0.01, bx + 0.18, 0.5, zz + 0.3, M['linen'] if k % 2 else M['boucle'])
-box('desk', 17.3, 1.3, z + 0.74, 18.3, 3.3, z + 0.78, M['walnut'], 0.01)
-box('desk_ped', 17.4, 1.4, z, 18.2, 1.9, z + 0.74, M['walnut'], 0.01)
-box('desk_leg', 17.75, 2.9, z, 17.85, 3.2, z + 0.74, M['bronze'])
-box('desk_chair', 18.45, 2.05, z + 0.0, 18.95, 2.55, z + 0.5, M['boucle'], 0.08)
-box('desk_chair_b', 18.85, 2.05, z + 0.5, 18.95, 2.55, z + 1.15, M['boucle'], 0.04)
-box('guest_ch1', 16.55, 1.6, z, 17.0, 2.05, z + 0.45, M['linen'], 0.06)
-box('guest_ch2', 16.55, 2.55, z, 17.0, 3.0, z + 0.45, M['linen'], 0.06)
-for o in sofa(13.2, 2.4, 2.4, 0.95, 'S', name='sofa_off'):
+# --- child room (x 12.9-16.55, y 0.2-4.3): pastel yellow + ivory wainscoting + natural oak
+kz = z
+KOPS = {'W': [(3.45, 4.25, 0.0, 2.3)]}
+clad(12.9, 0.2, 16.55, 4.3, kz, 0.9, CEIL, M['yellow_wall'], KOPS, 'kid_wp')
+clad(12.9, 0.2, 16.55, 4.3, kz, 0.0, 0.9, M['ivory_panel'], KOPS, 'kid_wains', t=0.03)
+clad(12.88, 0.18, 16.57, 4.32, kz, 0.88, 0.93, M['ivory_panel'], KOPS, 'kid_rail', t=0.05)
+# single bed with rounded pastel yellow headboard against the east partition
+box('kbed_frame', 14.45, 1.6, kz + 0.1, 16.5, 2.55, kz + 0.32, M['oak_light'], 0.06)
+box('kbed_matt', 14.5, 1.63, kz + 0.32, 16.45, 2.52, kz + 0.52, M['linen_ivory'], 0.06)
+box('kbed_duvet', 14.45, 1.58, kz + 0.48, 15.8, 2.57, kz + 0.58, M['yellow'], 0.06)
+cyl('kbed_hb', 16.5, 2.075, kz + 0.1, kz + 1.25, 0.55, M['yellow'], bevel=0.05).scale = (0.12, 1, 1)
+box('kbed_pillow', 16.05, 1.75, kz + 0.52, 16.4, 2.4, kz + 0.72, M['linen_ivory'], 0.07)
+cyl('knight', 16.25, 1.2, kz, kz + 0.5, 0.22, M['oak_light'], bevel=0.04)
+sphere('klamp', 16.25, 1.2, kz + 0.68, 0.14, M['lamp'])
+joinery_wall(12.95, 0.22, 14.9, 0.8, kz, kz + 2.3, M['ivory_panel'], 'kward', panel=0.65)
+cyl('krug', 14.6, 2.9, kz, kz + 0.012, 0.95, M['wool_rug'])
+cyl('kpouf', 13.6, 2.4, kz, kz + 0.38, 0.28, M['yellow'], bevel=0.1)
+for o in lounge_chair(13.5, 1.5, 60, M['boucle'], 'kchair'):
+    o.location.z += kz
+box('kdesk', 15.2, 3.85, kz + 0.6, 16.4, 4.27, kz + 0.64, M['oak_light'], 0.01)
+box('kshelf', 13.4, 4.25, kz + 1.4, 14.8, 4.28, kz + 1.43, M['oak_light'])
+sphere('kpend', 14.7, 2.2, kz + CEIL - 0.6, 0.28, M['lamp'], 1, 1, 0.7)
+# --- master dressing / sitting (x 16.75-19.8, y 0.2-4.3), opens to the bedroom at x 17.2-18.4
+joinery_wall(16.8, 0.22, 19.75, 0.82, z, z + 2.6, M['oak'], 'md_ward', panel=0.62)
+box('md_ward_top', 16.8, 0.22, z + 2.6, 19.75, 0.82, z + CEIL, M['wall'])
+box('md_island', 17.3, 1.7, z, 18.3, 2.4, z + 0.9, M['oak'], 0.01)
+box('md_island_top', 17.28, 1.68, z + 0.9, 18.32, 2.42, z + 0.93, M['trav'])
+for o in lounge_chair(19.2, 3.7, 220, M['boucle'], 'mdchair'):
     o.location.z += z
-coffee_round(14.4, 1.6, 0.45, z)
-rug(13.1, 0.9, 15.7, 3.3, z, M['rug_taupe'], 'orug')
-curtain(19.72, 1.85, 19.72, 3.55, z + 0.02, z + 2.95, name='curt_off')
-linear_pendant(17.4, 18.2, 2.3, z + CEIL, 0.9, 'off_lin')
-art(12.905, 1.3, 12.92, 3.0, z + 1.1, z + 2.2) if False else None
+box('md_side', 18.6, 3.75, z, 18.95, 4.1, z + 0.5, M['oak'], 0.02)
+mirror_panel(16.75, 2.9, 16.755, 3.9, z + 0.3, z + 2.2, 'md_mir')
+rug(17.0, 1.2, 19.6, 3.1, z, M['wool_rug'], 'mdrug')
+curtain(19.72, 1.85, 19.72, 3.55, z + 0.02, z + 2.95, name='curt_md')
+cove(16.9, 0.4, 19.6, 4.1, z + CEIL, 20)
+cove(13.0, 0.4, 16.4, 4.1, z + CEIL, 25)
 # --- office bath (x 11.1-12.7, y 0.2-3.2)
 vanity(11.12, 1.9, 11.58, 2.9, z, top_m=M['trav'], name='ob_van')
 mirror_panel(11.115, 2.0, 11.12, 2.8, z + 1.05, z + 2.05, 'ob_mir')
@@ -906,9 +934,14 @@ for (x, y) in [(6.1, 1.0), (10.3, 3.7), (11.9, 3.85), (8.6, 7.1), (13.5, 3.7), (
                (11.9, 7.2), (11.9, 6.1), (11.9, 2.4), (0.9, 4.6), (5.9, 7.4), (11.9, 4.95)]:
     downlight(x, y, L2Z + CEIL)
 cove(0.5, 0.5, 4.8, 5.2, CEIL, 18)
+for (x0, y0, x1, y1, zc, st) in [(5.5, 4.7, 6.8, 7.7, CEIL, 60), (0.3, 3.3, 1.5, 5.4, L2Z + CEIL, 60),
+                                 (11.2, 5.7, 12.6, 7.8, L2Z + CEIL, 60), (11.2, 0.3, 12.6, 3.1, L2Z + CEIL, 60),
+                                 (0.4, 5.8, 4.0, 7.8, L2Z + CEIL, 45), (4.2, 5.8, 5.1, 7.8, CEIL, 50),
+                                 (5.45, 4.6, 6.8, 7.8, L2Z + CEIL, 40), (1.9, 3.3, 5.1, 5.4, L2Z + CEIL, 25),
+                                 (11.2, 4.6, 12.6, 5.4, L2Z + CEIL, 40), (10.95, 3.45, 12.65, 4.25, L2Z + CEIL, 40)]:
+    cove(x0, y0, x1, y1, zc, st)
 cove(5.6, 0.5, 12.3, 4.0, CEIL, 14)
 cove(5.6, 0.5, 10.7, 4.1, L2Z + CEIL, 16)
-cove(13.1, 0.4, 19.6, 4.1, L2Z + CEIL, 14)
 cove(8.3, 4.7, 10.7, 7.7, L2Z + CEIL, 14)
 
 # ---------------------------------------------------------------- world, context outside
@@ -952,7 +985,7 @@ scn.render.resolution_x = int(os.environ.get('RX', '1024'))
 scn.render.resolution_y = int(os.environ.get('RY', '683'))
 scn.view_settings.view_transform = 'AgX'
 scn.view_settings.look = 'AgX - Base Contrast'
-scn.view_settings.exposure = float(os.environ.get('EXPO', '-0.15'))
+scn.view_settings.exposure = float(os.environ.get('EXPO', '-0.45'))
 scn.render.image_settings.file_format = 'JPEG'
 scn.render.image_settings.quality = 92
 
