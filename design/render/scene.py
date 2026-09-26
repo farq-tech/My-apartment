@@ -68,7 +68,7 @@ def tile_floor_mat():
     tex.projection = 'BOX'
     tc = N.new('ShaderNodeTexCoord')
     mp = N.new('ShaderNodeMapping')
-    mp.inputs['Scale'].default_value = (1 / 0.6, 1 / 0.6, 1 / 0.6)
+    mp.inputs['Scale'].default_value = (1 / 1.2, 1 / 0.6, 1 / 0.6)
     L.new(tc.outputs['Object'], mp.inputs['Vector'])
     L.new(mp.outputs['Vector'], tex.inputs['Vector'])
     br = N.new('ShaderNodeTexBrick')
@@ -195,7 +195,7 @@ def glass_mat():
 
 
 M = dict(
-    wall=mat('wall', '#D9D3C8', 0.85),
+    wall=mat('wall', os.environ.get('WALL', '#D9D3C8'), 0.85),
     ceiling=mat('ceiling', '#EFEBE4', 0.9),
     floor=tile_floor_mat(),
     trav=travertine_mat(),
@@ -384,10 +384,60 @@ build_level(L02_WALLS, L2Z, 'L02')
 slab(0.2, 0.2, 19.8, 7.9, L2Z, M['floor'], 'floor_L02', holes=[L02_VOID])
 slab(5.35, 0.2, 19.8, 7.9, L2Z + CEIL + 0.01, M['ceiling'], 'ceil_L02')
 slab(0.2, 3.2, 5.35, 7.9, L2Z + CEIL + 0.01, M['ceiling'], 'ceil_L02b')
-# terrace glass roof (x 0.2-5.2, y 0.2-3.0)
-for k in range(5):
-    box('roof_beam', 0.2 + k * 1.2, 0.2, L2Z + CEIL - 0.08, 0.26 + k * 1.2, 3.0, L2Z + CEIL, M['alu'])
-box('roof_glass', 0.2, 0.2, L2Z + CEIL - 0.01, 5.2, 3.0, L2Z + CEIL, M['glass'])
+# terrace greenhouse (x 0.2-5.2, y 0.2-3.0): pitched glass roof on slim black steel frame
+GH = dict(x0=0.2, x1=5.2, y0=0.2, y1=3.0, eave=L2Z + CEIL, ridge=L2Z + CEIL + 0.9)
+steel = mat('steel_black', '#1E1D1B', 0.45, 0.9)
+M['steel'] = steel
+ymid = (GH['y0'] + GH['y1']) / 2
+for side in (0, 1):
+    ya, yb = (GH['y0'], ymid) if side == 0 else (ymid, GH['y1'])
+    za, zb = (GH['eave'], GH['ridge']) if side == 0 else (GH['ridge'], GH['eave'])
+    L_ = math.hypot(yb - ya, zb - za)
+    ang = math.atan2(zb - za, yb - ya)
+    bpy.ops.mesh.primitive_cube_add(size=1, location=((GH['x0'] + GH['x1']) / 2, (ya + yb) / 2, (za + zb) / 2))
+    g_ = bpy.context.active_object
+    g_.name = 'gh_glass'
+    g_.scale = (GH['x1'] - GH['x0'], L_, 0.012)
+    g_.rotation_euler = (ang, 0, 0)
+    g_.data.materials.append(M['glass'])
+    for k in range(9):
+        x = GH['x0'] + k * (GH['x1'] - GH['x0']) / 8
+        bpy.ops.mesh.primitive_cube_add(size=1, location=(x, (ya + yb) / 2, (za + zb) / 2 - 0.03))
+        r_ = bpy.context.active_object
+        r_.name = 'gh_rafter'
+        r_.scale = (0.035, L_, 0.06)
+        r_.rotation_euler = (ang, 0, 0)
+        r_.data.materials.append(steel)
+box('gh_ridge', GH['x0'], ymid - 0.04, GH['ridge'] - 0.08, GH['x1'], ymid + 0.04, GH['ridge'], steel)
+for yy in (GH['y0'], GH['y1'] - 0.08):
+    box('gh_eave', GH['x0'], yy, GH['eave'] - 0.1, GH['x1'], yy + 0.08, GH['eave'], steel)
+# gable ends: glass triangles framed in steel
+for xx in (GH['x0'], GH['x1'] - 0.012):
+    me = bpy.data.meshes.new('gh_gable')
+    me.from_pydata([(xx, GH['y0'], GH['eave']), (xx, GH['y1'], GH['eave']), (xx, ymid, GH['ridge'])], [], [(0, 1, 2)])
+    o_ = bpy.data.objects.new('gh_gable', me)
+    col.objects.link(o_)
+    o_.data.materials.append(M['glass'])
+# hanging plants from rafters and a vertical green wall on the west wall
+for k, x in enumerate((1.0, 1.9, 2.8, 3.7, 4.5)):
+    box('gh_rope', x - 0.004, 1.6 - 0.004, L2Z + 2.1, x + 0.004, 1.6 + 0.004, GH['eave'] + 0.3, steel)
+    cyl('gh_hpot', x, 1.6, L2Z + 1.95, L2Z + 2.15, 0.14, M['pot'], bevel=0.02)
+    for j in range(22):
+        a = j * 0.9
+        o = sphere('gh_trail', x + 0.13 * math.cos(a), 1.6 + 0.13 * math.sin(a), L2Z + 2.1 - (j % 7) * 0.09, 0.05,
+                   M['plant'], 1.0, 0.45, 0.25)
+        o.rotation_euler = (a, j * 0.3, 0)
+import random as _gr
+_q = _gr.Random(9)
+for j in range(520):
+    y = 0.8 + _q.random() * 2.1
+    zz = L2Z + 0.6 + _q.random() * 2.2
+    o = sphere('gh_wall', 0.23 + _q.random() * 0.05, y, zz, 0.06, M['plant'], 0.25, 1.0, 0.55)
+    o.rotation_euler = (_q.random() * 3, 0, 0)
+box('gh_wall_back', 0.2, 0.8, L2Z + 0.55, 0.23, 2.95, L2Z + 2.9, mat('moss', '#3F5635', 0.9))
+# warm string lights along the ridge
+for k in range(18):
+    sphere('gh_bulb', GH['x0'] + 0.15 + k * 0.27, ymid, GH['ridge'] - 0.35 - 0.12 * math.sin(k * 0.7), 0.025, M['led'])
 # slab between L01 ceiling and L02 floor (visual thickness from outside only)
 # bathrooms: travertine walls (cladding) and floor
 BATHS = {
@@ -823,14 +873,16 @@ for k in range(260):
         px, py = 0.8 + _g.random() * 4.3, 0.25 + _g.random() * 0.4
     o = sphere('shrub', px, py, z + 0.58 + _g.random() * 0.45, 0.06, M['plant'], 1.0, 0.4, 0.2)
     o.rotation_euler = (_g.random() * 3, _g.random() * 3, _g.random() * 3)
-plant(4.8, 0.98, z, 2.0)
-for o in lounge_chair(1.9, 1.9, 200, M['linen'], 'tlc1'):
+plant(4.8, 0.98, z, 2.2)
+plant(0.55, 2.7, z, 2.0)
+for o in sofa(1.3, 2.05, 2.6, 0.85, 'S', M['linen_ivory'], name='gh_sofa'):
     o.location.z += z
-for o in lounge_chair(3.4, 1.9, 160, M['linen'], 'tlc2'):
+for o in lounge_chair(1.45, 1.15, 235, M['linen'], 'gh_lc1'):
     o.location.z += z
-for o in coffee_round(2.65, 1.45, 0.3, z, h=0.42, name='tct'):
-    pass
-rug(1.2, 0.9, 4.2, 2.8, z, M['rug_taupe'], 'ter_rug')
+for o in lounge_chair(3.75, 1.15, 125, M['linen'], 'gh_lc2'):
+    o.location.z += z
+coffee_round(2.6, 1.45, 0.45, z, m=M['oak'], h=0.4, name='gh_table')
+rug(1.0, 0.85, 4.3, 2.85, z, M['rug_taupe'], 'ter_rug')
 # --- nanny room (x 1.8-5.2, y 3.2-5.5)
 bed(2.45, 3.45, 1.2, 2.0, 'N', z, name='bed_nanny', hb_h=1.1)
 box('ns_n', 1.85, 5.05, z, 2.3, 5.45, z + 0.5, M['oak'], 0.01)
@@ -950,12 +1002,18 @@ scn.world = world
 world.use_nodes = True
 wn = world.node_tree.nodes
 sky = wn.new('ShaderNodeTexSky')
-sky.sky_type = 'NISHITA'
+for _t in ('NISHITA', 'SINGLE_SCATTERING', 'MULTIPLE_SCATTERING'):
+    try:
+        sky.sky_type = _t
+        break
+    except TypeError:
+        pass
 sky.sun_elevation = math.radians(38)
 sky.sun_rotation = math.radians(200)
 sky.sun_intensity = 0.45
 sky.air_density = 1.2
-sky.dust_density = 2.5
+if hasattr(sky, 'dust_density'):
+    sky.dust_density = 2.5
 world.node_tree.links.new(sky.outputs['Color'], wn['Background'].inputs['Color'])
 wn['Background'].inputs['Strength'].default_value = 0.35
 sun = bpy.data.lights.new('sun', 'SUN')
@@ -973,6 +1031,16 @@ for (x0, y0, x1, y1, h) in [(-40, -38, -10, -22, 16), (-6, -34, 14, -24, 12), (1
 # ---------------------------------------------------------------- render settings
 scn.render.engine = 'CYCLES'
 scn.cycles.device = 'CPU'
+try:
+    _cp = bpy.context.preferences.addons['cycles'].preferences
+    _cp.compute_device_type = 'METAL'
+    _cp.get_devices()
+    for _d in _cp.devices:
+        _d.use = True
+    scn.cycles.device = 'GPU'
+    print('DEVICE GPU METAL', [d.name for d in _cp.devices], flush=True)
+except Exception as _e:
+    print('DEVICE CPU', _e, flush=True)
 scn.cycles.samples = int(os.environ.get('SAMPLES', '24'))
 scn.cycles.use_denoising = True
 scn.cycles.max_bounces = 8
@@ -984,7 +1052,12 @@ scn.cycles.caustics_refractive = False
 scn.render.resolution_x = int(os.environ.get('RX', '1024'))
 scn.render.resolution_y = int(os.environ.get('RY', '683'))
 scn.view_settings.view_transform = 'AgX'
-scn.view_settings.look = 'AgX - Base Contrast'
+for _lk in ('AgX - Base Contrast', 'Base Contrast'):
+    try:
+        scn.view_settings.look = _lk
+        break
+    except TypeError:
+        pass
 scn.view_settings.exposure = float(os.environ.get('EXPO', '-0.45'))
 scn.render.image_settings.file_format = 'JPEG'
 scn.render.image_settings.quality = 92

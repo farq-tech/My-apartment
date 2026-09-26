@@ -6,7 +6,7 @@ import os, sys, time, subprocess
 BASE = ('Turn this 3D render into an ultra photorealistic architectural interior photograph of a finished Riyadh apartment. '
         'Keep the exact room geometry, camera angle, walls, doors, windows, ceiling and every furniture piece exactly as in the render: '
         'do not add, remove, replace or move anything; only make materials, light and textures photographic. '
-        'Windows stay windows with their sill, no balconies or railings. '
+        'Windows stay flush windows with a solid wall below the sill: no balconies, no railings, no sliding doors, no city towers outside. '
         'Keep the floor exactly as it is: light warm grey marble-look 120x60 ceramic tiles with soft subtle veining and thin joints, satin finish. '
         'Light greige matte painted walls, smoked oak joinery, satin bronze details, bright soft natural daylight, '
         'realistic shadows and reflections, calm quiet-luxury styling, high-end interior photography. ')
@@ -27,8 +27,9 @@ ROOM = {
     'Entrance': 'Entrance corridor with smoked oak built-in shoe cabinet, boucle bench, rug, downlights.',
     'FamilyLounge': 'Family lounge: ivory boucle sofa, round travertine coffee table, oak media wall with TV, '
                     'wool rug, sheer curtains, glass door to a planted sunroom, potted olive tree.',
-    'Terrace': 'Planted sunroom under a glass roof: travertine planters with lush green shrubs, two linen lounge '
-               'chairs, small round table, olive tree, bright daylight.',
+    'Terrace': 'Glass greenhouse sitting room: pitched clear glass roof on slim black steel frames, lush vertical green wall, '
+               'hanging trailing plants in ceramic pots, travertine planters with shrubs, olive trees, ivory linen sofa, two '
+               'lounge chairs, round oak coffee table, warm string lights along the ridge, bright natural daylight from above.',
     'MasterBedroom': 'Master bedroom: bed with tall upholstered taupe linen headboard wall with hidden warm light, '
                      'ivory linen bedding, oak nightstands, wall sconces, boucle bench, smoked oak wardrobes, '
                      'dressing table with mirror, sheer curtains, wool rug.',
