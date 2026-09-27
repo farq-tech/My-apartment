@@ -28,7 +28,7 @@ for scr in bpy.data.screens:
     for a in scr.areas:
         if a.type == 'VIEW_3D':
             sp = a.spaces.active
-            sp.shading.type = 'MATERIAL'
+            sp.shading.type = 'RENDERED'
             sp.overlay.show_floor = False
             sp.overlay.show_axis_x = False
             sp.overlay.show_axis_y = False
@@ -38,6 +38,13 @@ for scr in bpy.data.screens:
             sp.overlay.show_relationship_lines = False
             sp.region_3d.view_camera_zoom = 29
             sp.region_3d.view_camera_offset = (0, 0)
+eng = [e.identifier for e in bpy.types.RenderSettings.bl_rna.properties['engine'].enum_items]
+scn.render.engine = 'BLENDER_EEVEE_NEXT' if 'BLENDER_EEVEE_NEXT' in eng else 'BLENDER_EEVEE'
+try:
+    scn.eevee.use_raytracing = True
+    scn.eevee.use_shadows = True
+except Exception:
+    pass
 bpy.ops.file.pack_all()
 out = sys.argv[sys.argv.index('--') + 1]
 bpy.ops.wm.save_as_mainfile(filepath=out, compress=True)
