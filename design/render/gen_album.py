@@ -84,6 +84,8 @@ figcaption{{display:flex;justify-content:space-between}}
   <div class="top"><div><span class="eyebrow">Master Design · Option 01</span><h1>Duplex Walkthrough</h1></div>
   <span class="eyebrow">First + Second Floor · {len(order)} views</span></div>
   <nav aria-label="Rooms">{nav}</nav>
+  <section class="floor" id="walk"><div class="floorhead"><div><span class="eyebrow">WALKTHROUGH</span><h2>الجولة: من باب الشقة إلى الدور الأول</h2></div></div>
+  <video src="img/walkthrough.mp4" controls playsinline preload="metadata" style="width:100%;background:#000"></video></section>
   {''.join(sections)}
   <div class="notes" dir="rtl" lang="ar">
     الهندسة من المخطط: الجدران والأبواب والنوافذ والدرج مبنية من ملف DWG بالمتر، والكاميرات في مواقع حقيقية كما في مفتاح كل دور.

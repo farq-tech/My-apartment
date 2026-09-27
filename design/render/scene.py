@@ -195,7 +195,7 @@ def glass_mat():
 
 
 M = dict(
-    wall=mat('wall', os.environ.get('WALL', '#D9D3C8'), 0.85),
+    wall=mat('wall', os.environ.get('WALL', '#BFB2A2'), 0.85),
     ceiling=mat('ceiling', '#EFEBE4', 0.9),
     floor=tile_floor_mat(),
     trav=travertine_mat(),
@@ -298,7 +298,7 @@ def rot_group(objs, cx, cy, ang):
 
 
 # ---------------------------------------------------------------- architecture
-OPEN_DOORS = {(4.15, 5.05), (3.3, 4.2), (11.3, 12.2), (4.55, 5.4), (3.45, 4.25), (9.75, 10.65)}
+OPEN_DOORS = {(5.45, 6.45), (4.15, 5.05), (3.3, 4.2), (11.3, 12.2), (4.55, 5.4), (3.45, 4.25), (9.75, 10.65)}
 def build_wall(x0, y0, x1, y1, openings, z0, h, m, level):
     horiz = (x1 - x0) >= (y1 - y0)
     a0, a1 = (x0, x1) if horiz else (y0, y1)
