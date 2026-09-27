@@ -1,0 +1,623 @@
+<title>Travertine House Directions</title>
+<meta name="description" content="Phase 1: plan analysis, tile analysis, paint options, design directions, railings and concept packages built around the installed travertine-look floor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Noto+Kufi+Arabic:wght@300;500&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&display=swap">
+<style>
+:root{
+  --bg:#EDEAE5; --surface:#F7F5F1; --ink:#25221E; --muted:#6F665B; --line:#D6D0C6;
+  --accent:#5B4A37; --accent-soft:#E3DBCF; --warn:#8A4B2A; --warn-bg:#F3E6DC; --ok:#4F5E43;
+  --f-body:"IBM Plex Sans Arabic",system-ui,"Segoe UI",Tahoma,sans-serif;
+  --f-display:"Noto Kufi Arabic","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --f-latin:"Cormorant Garamond","Times New Roman",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1A1917; --surface:#23211E; --ink:#ECE6DD; --muted:#A99D8E; --line:#3A3631;
+    --accent:#C9AC84; --accent-soft:#332C24; --warn:#E0A27E; --warn-bg:#3A2A20; --ok:#A9BB95;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1A1917; --surface:#23211E; --ink:#ECE6DD; --muted:#A99D8E; --line:#3A3631;
+  --accent:#C9AC84; --accent-soft:#332C24; --warn:#E0A27E; --warn-bg:#3A2A20; --ok:#A9BB95;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:40px 80px}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;text-wrap:balance;line-height:1.35;margin:0}
+h1{font-size:clamp(28px,4.4vw,44px);font-weight:300}
+h2{font-size:clamp(22px,3vw,30px);font-weight:300}
+h3{font-size:18px}
+p{margin:0;max-width:68ch}
+.latin{font-family:var(--f-latin);font-style:italic;font-weight:500;letter-spacing:.01em;direction:ltr;unicode-bidi:isolate}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);direction:ltr;unicode-bidi:isolate;font-family:var(--f-body)}
+.stack{display:flex;flex-direction:column;gap:16px}
+section{display:flex;flex-direction:column;gap:22px;padding-block:44px;border-top:1px solid var(--line)}
+header.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:end;padding-bottom:36px}
+header.hero img{border-radius:2px;display:block;width:100%;height:320px;object-fit:cover}
+.summary{background:var(--surface);border:1px solid var(--line);padding:22px 24px;display:flex;flex-direction:column;gap:12px}
+.summary ul,.list{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:6px}
+.alert{background:var(--warn-bg);border-inline-start:3px solid var(--warn);padding:16px 20px;display:flex;flex-direction:column;gap:8px}
+.alert strong{color:var(--warn)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+figure{margin:0;display:flex;flex-direction:column;gap:8px}
+figure img{width:100%;display:block;background:#fff;border:1px solid var(--line)}
+figcaption{font-size:13px;color:var(--muted)}
+.plan{background:var(--surface);border:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:12px}
+.plan img{background:#fff}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;padding:4px 10px 4px 12px;border:1px solid var(--line);background:var(--surface);border-radius:999px;font-variant-numeric:tabular-nums}
+.sw{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.15);flex:none}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:760px}
+th,td{padding:10px 12px;text-align:start;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-weight:500;color:var(--muted);font-size:12.5px;background:var(--accent-soft)}
+td .sw{display:inline-block;vertical-align:-2px;margin-inline-end:6px}
+.opt{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start;background:var(--surface);border:1px solid var(--line);padding:20px}
+.opt img{width:100%;display:block;border:0}
+.opt .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.opt .letter{font-family:var(--f-latin);font-size:40px;line-height:1;color:var(--accent)}
+.tag{font-size:12px;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.tag.warn{background:var(--warn-bg);color:var(--warn)}
+.tag.ok{color:var(--ok)}
+.spec{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;margin:0}
+.spec dt{color:var(--muted);white-space:nowrap}
+.spec dd{margin:0}
+.dir{background:var(--surface);border:1px solid var(--line);padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.dir .no{font-family:var(--f-latin);font-size:22px;color:var(--accent)}
+.dir .strip{display:flex;height:10px}
+.dir .strip span{flex:1}
+.rail{background:var(--surface);border:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:10px}
+.rail svg{width:100%;height:auto;display:block;color:var(--ink)}
+.concept{background:var(--surface);border:1px solid var(--line);display:grid;grid-template-columns:320px 1fr;gap:0}
+.concept img{width:100%;height:100%;object-fit:cover;display:block}
+.concept .body{padding:20px 24px;display:flex;flex-direction:column;gap:12px}
+.q{counter-reset:q;display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
+.q li{counter-increment:q;display:grid;grid-template-columns:34px 1fr;gap:10px;background:var(--surface);border:1px solid var(--line);padding:14px 16px}
+.q li::before{content:counter(q);font-family:var(--f-latin);font-size:22px;color:var(--accent);line-height:1.2}
+.note{font-size:13.5px;color:var(--muted)}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px}
+nav.toc a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--ink);border-color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:820px){
+  header.hero,.grid2,.opt,.concept{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr}
+  header.hero img{height:220px}
+  .concept img{height:220px}
+}
+</style>
+
+<div class="wrap" dir="rtl" lang="ar">
+
+<header class="hero">
+  <div class="stack">
+    <span class="eyebrow">Phase 1 · Directions before design</span>
+    <h1>دوبلكس هادئ فوق أرضية حجرية فاتحة</h1>
+    <p>وحدتك (الدور الأول + الدور الثاني) بعد تحديدها من المخططات. في الصفحة: تحليل البلاطين الثابتين، وستة خيارات دهان بألواح مواد، وسبعة اتجاهات تصميم، وستة أنظمة درابزين، وأربعة خيارات للحمامات حول الترافرتين، وثلاث باقات Concept. لا يبدأ التنفيذ النهائي ولا الصور الفوتورياليستية قبل اختيارك.</p>
+    <nav class="toc" aria-label="المحتويات">
+      <a href="#plan">تحديد الوحدة</a><a href="#tile">البلاط</a><a href="#paint">الدهانات</a><a href="#dirs">الاتجاهات</a><a href="#rail">الدرابزين</a><a href="#furn">الأثاث</a><a href="#bath">الحمامات</a><a href="#concepts">الباقات</a><a href="#viz">الصور الواقعية</a><a href="#questions">الأسئلة</a>
+    </nav>
+  </div>
+  <figure>
+    <img src="img/floor_site.jpg" alt="البلاط الرئيسي المركب في الموقع: سادة فاتح مطفي بفواصل رفيعة">
+    <figcaption>البلاط الرئيسي كما هو مركب في الموقع. يغطي كل المساحات ما عدا الحمامات.</figcaption>
+  </figure>
+</header>
+
+<div class="summary">
+  <span class="eyebrow">Executive summary</span>
+  <ul>
+    <li><strong>تصحيح مهم:</strong> النسخة السابقة من الصفحة عاملت الترافرتين كبلاط أرضية المنزل. بعد توضيحك صار الوضع كالتالي: البلاط الرئيسي سادة فاتح مركب في كل المساحات، والترافرتين للحمامات أرضيات وجدراناً. أعدت كل الألواح والتحليل على هذا الأساس.</li>
+    <li><strong>البلاط الرئيسي هادئ ومحايد يميل للبرودة.</strong> الأرضية لن تعطي المنزل الدفء ولا الشخصية، فالمسؤول عنهما الجدران والخشب والأقمشة والإضاءة. الخطر الأكبر أن يصبح البيت رمادياً بارداً يشبه المكاتب.</li>
+    <li><strong>الترافرتين هو العنصر الأغنى في المنزل</strong> وموجود في الحمامات فقط. لذلك يجب أن تربط اللوحة اللونية بين أرضية باردة هادئة وحمامات دافئة بعروق taupe.</li>
+    <li><strong>توصيتي:</strong> دهان B (Light Greige) لأنه الجسر بين البلاطين، مع اتجاه Quiet Luxury، وخشب بلوط مدخن، وبرونز ساتان. وللحمامات الخيار BA-1.</li>
+    <li><strong>الوحدة:</strong> أكدت أن التحديد صحيح. وحدتك هي ورقتا FIRST FLOOR و ROOF FLOOR (المستوى الثاني)، وكل ما عداهما خارج النطاق.</li>
+  </ul>
+</div>
+
+<!-- ============ PLAN ============ -->
+<section id="plan">
+  <span class="eyebrow">Step 0 · Unit identification</span>
+  <h2>تحديد وحدتي داخل المخططات</h2>
+  <p>قرأت ملف <span class="latin">4.dwg</span> كاملاً، وملف العرض PDF (48 صفحة)، وطابقت بينهما. ملف العرض يعرض مستويين فقط: "الدور الأول" و"دور الروف"، وهما نفس ورقتي <span class="latin">FIRST FLOOR PLAN</span> و<span class="latin">ROOF FLOOR PLAN</span> في الـ DWG خطاً بخط. المواد والأثاث في ملف العرض (باركيه، رخام أسود، أرضية جراي) تخص تصميماً سابقاً وتم تجاهلها بالكامل.</p>
+
+  <h3 class="latin" style="font-size:22px">Unit mapping</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>الوحدة كما ظهرت في الملفات</th><th>الأوراق</th><th>الدرج الداخلي</th><th>الحكم</th><th>الدليل</th><th>الثقة</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Duplex أ: أول + علوي</strong></td><td>FIRST FLOOR PLAN + ROOF FLOOR PLAN، ومعها واجهات الغرف (Kids Room، Master، Nanny، Library)</td><td>3.07 × 2.20 م، نائمة 30.5 سم تقريباً</td><td><strong>وحدتك</strong></td><td>ملف العرض الذي أرسلته يغطي هاتين الورقتين فقط. الدرج مطابق هندسياً في المستويين وعلى نفس البعد من الجدارين الأيسر والعلوي (1.05 م و0.20 م). الجداران الخارجيان العلوي والسفلي والجدران الداخلية الرئيسية تنطبق عند التركيب.</td><td>عالية</td></tr>
+        <tr><td>Duplex ب: أرضي + أول</td><td>GROUND FLOOR FURNITURE PLAN + ورقة "FIRST PLAN" المنفصلة</td><td>حوالي 4.0 × 2.3 م، أي درج مختلف</td><td>مستبعدة</td><td>درج بمقاس مختلف عن درج وحدتك، ومسقط وشكل خارجي مختلفان. هذه على الأرجح وحدة الأرضي + أول التي ذكرتها.</td><td>متوسطة في الربط بين الورقتين، عالية في أنها ليست وحدتك</td></tr>
+        <tr><td>البدروم</td><td>BASEMENT FURNITURE / CEILING + 3 نسخ مفتاحية + واجهات</td><td>لا يوجد درج داخلي مطابق</td><td>مستبعد</td><td>قاعة بشبكة أعمدة وحديقة وسلم خارجي. ليس جزءاً من أي Duplex أول + علوي.</td><td>عالية</td></tr>
+        <tr><td>الوحدتان الرابعة والخامسة</td><td>غير موجودتين في الملفات</td><td>—</td><td>—</td><td>الملفات لا تحتوي إلا ما سبق. لم أجد أرقام وحدات أو رموزاً تميز الوحدات في الـ DWG.</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert" role="note" style="border-color:var(--ok);background:var(--accent-soft)">
+    <strong style="color:var(--ok)">تم التأكيد: وحدتك هي ورقتا FIRST FLOOR و ROOF FLOOR.</strong>
+    <p>لم أجد في الملفات Duplex ثانياً (أول + ثاني) يشبه وحدتك، وأكدت أن التحديد صحيح. أفترض أن الامتداد الإضافي في المستوى الثاني (المكتب وغرفة النوم الرئيسية) والتراس ضمن وحدتك. إذا لم يكن كذلك فأخبرني قبل مرحلة التوزيع.</p>
+  </div>
+
+  <figure>
+    <img src="img/unit_overlay.png" alt="تركيب المستوى الأول فوق المستوى العلوي بمحاذاة الدرج" loading="lazy">
+    <figcaption>التحقق من الترابط: المستوى الأول (برتقالي) فوق المستوى العلوي (أزرق) بعد محاذاة الدرج. الجداران الخارجيان العلوي والسفلي تنطبقان، والجدران الداخلية الرئيسية على نفس المحاور. المستوى العلوي يمتد حوالي 7.3 م إضافية في الجهة اليمنى (المكتب وغرفة النوم الرئيسية) فوق مساحة ليست ضمن الدور الأول لوحدتك. الأثاث المرسوم ظاهر لأنه على نفس طبقة الجدران، وتم تجاهله.</figcaption>
+  </figure>
+
+  <h3 class="latin" style="font-size:22px">My unit — included spaces</h3>
+  <div class="grid2">
+    <div class="plan">
+      <img src="img/unit_l01_pdf.png" alt="المستوى الأول بالأبعاد" loading="lazy">
+      <h3>LEVEL 01 · FIRST FLOOR</h3>
+      <dl class="kv">
+        <dt>المقاس</dt><dd>12.553 × 7.551 م خارجياً، و12.073 م صافي داخلي (من الأبعاد المكتوبة)</dd>
+        <dt>الدرج</dt><dd>الزاوية العلوية اليسرى، 10.44 م² حسب الرسم</dd>
+        <dt>المعيشة والطعام</dt><dd>فراغ واحد مفتوح بعمق 5.18 م صافي، والطعام يمتد في البروز الأيمن</dd>
+        <dt>المطبخ</dt><dd>مفتوح على الطعام، بعرض 4.18 م</dd>
+        <dt>دورة مياه ضيوف</dt><dd>بعرض 1.425 م</dd>
+        <dt>مجرى خدمات</dt><dd>بعرض 0.844 م بين دورة المياه والمطبخ، ثابت ولا يُستخدم</dd>
+        <dt>غير واضح</dt><dd>موقع باب الدخول الرئيسي للوحدة (السؤال 4)</dd>
+      </dl>
+    </div>
+    <div class="plan">
+      <img src="img/unit_l02_pdf.png" alt="المستوى العلوي بمساحات الغرف" loading="lazy">
+      <h3>LEVEL 02 · SECOND FLOOR <span class="note">(مسماه في الرسم ROOF FLOOR)</span></h3>
+      <dl class="kv">
+        <dt>المقاس</dt><dd>20.0 × 8.1 م (مقاس من الـ DWG)</dd>
+        <dt>بسطة الدرج</dt><dd>Entrance 3.45 م² وممر 5.06 م²</dd>
+        <dt>صالة عائلية</dt><dd>24.58 م²</dd>
+        <dt>غرفة النوم الرئيسية</dt><dd>23.41 م²، مع غرفة ملابس 2.1 م² وحمام 2.67 م²</dd>
+        <dt>غرفة أطفال</dt><dd>9.54 م²</dd>
+        <dt>غرفة صغيرة + حمام</dt><dd>7.8 م² + 3.48 م² (واجهاتها في الـ DWG باسم Nanny)</dd>
+        <dt>مكتب / مكتبة</dt><dd>حوالي 27–28 م²، مع حمام 4.13 م²</dd>
+        <dt>تراس</dt><dd>13.66 م² (المشتل في العرض السابق بسقف زجاجي)</dd>
+      </dl>
+    </div>
+  </div>
+  <p class="note">المساحات منقولة من تسميات الرسم وليست محسوبة من جديد. قراءة رقم المكتب في الرسم غير واضحة (27.07 أو 27.97). المستبعد من نطاق التصميم: الدور الأرضي، ورقة "FIRST PLAN"، البدروم، وأي درج أو ممر مشترك للمبنى.</p>
+</section>
+
+<!-- ============ TILE ============ -->
+<section id="tile">
+  <span class="eyebrow">02 · The fixed elements</span>
+  <h2>البلاطان الثابتان</h2>
+
+  <h3 class="latin" style="font-size:22px">Main floor · كل المساحات عدا الحمامات</h3>
+  <div class="grid2">
+    <div class="stack">
+      <dl class="spec">
+        <dt>النوع البصري</dt><dd>بلاط سادة بمظهر حجري ناعم جداً، مطفي، بنقاط دقيقة متفرقة، بمقاس كبير rectified وفواصل رفيعة داكنة ومثبتات تسوية.</dd>
+        <dt>اللون</dt><dd>أنظف قراءة من الصور حوالي <bdi dir="ltr">#D1CDCD</bdi>، أي رمادي فاتح شبه محايد بميل خفيف جداً للدفء. LRV حوالي 60.</dd>
+        <dt>حدود القياس</dt><dd>الصور مأخوذة من فيديو فيه ضبط أبيض تلقائي وغبار وظل، والقراءات تراوحت بين LRV 28 و62. القيمة أعلاه تقدير وليست قياساً نهائياً.</dd>
+        <dt>الدفء/البرودة</dt><dd>محايد يميل للبرودة في الصور. سيبدو أدفأ قليلاً بعد التنظيف وتحت إضاءة 2700–3000K.</dd>
+        <dt>النقشة</dt><dd>شبه معدومة. الأرضية خلفية هادئة وليست عنصراً.</dd>
+        <dt>ماذا يعني هذا</dt><dd>الدفء والملمس يأتيان من الخشب والأقمشة والجدران. السجاد يمكن أن يحمل ملمساً أقوى من السابق لأن الأرضية لا تنافسه.</dd>
+      </dl>
+    </div>
+    <figure>
+      <img src="img/tile_site.jpg" alt="البلاط الرئيسي في الموقع مع مثبتات التسوية" loading="lazy">
+      <figcaption>البلاط الرئيسي في الموقع. ألواح الدهانات تستخدم محاكاة نظيفة بنفس اللون المقاس، لأن صور الفيديو فيها منظور وغبار. أحتاج صورة نظيفة كما في قسم الأسئلة.</figcaption>
+    </figure>
+  </div>
+
+  <h3 class="latin" style="font-size:22px">Bathrooms · Travertine, floors and walls</h3>
+  <div class="grid2">
+    <div class="stack">
+      <dl class="spec">
+        <dt>النوع البصري</dt><dd>ترافرتين بقص طولي (vein-cut) بعروق خطية مستمرة.</dd>
+        <dt>اللون المقاس</dt><dd>المتوسط <bdi dir="ltr">#B3B1AF</bdi> بإضاءة المعرض، والعروق taupe حوالي <bdi dir="ltr">#8C7B66</bdi>. التشبع 2.5%.</dd>
+        <dt>Undertone</dt><dd>مزدوج: قاعدة رمادية وعروق بنية دافئة. أغنى وأدفأ من البلاط الرئيسي.</dd>
+        <dt>LRV</dt><dd>حوالي 44، أغمق من البلاط الرئيسي. الحمامات ستكون أعمق وأكثر احتواءً من باقي البيت، وهذا جيد إذا كانت الإضاءة مدروسة.</dd>
+        <dt>اتجاه العروق</dt><dd>أقترح عروقاً أفقية على الجدران في الحمامات الصغيرة لتوسيعها بصرياً، وأن تستمر العروق من الجدار للأرضية على نفس المحور.</dd>
+      </dl>
+      <div class="chips" aria-label="ألوان البلاطين">
+        <span class="chip"><span class="sw" style="background:#D1CDCD"></span>Main floor ≈ #D1CDCD</span>
+        <span class="chip"><span class="sw" style="background:#B3B1AF"></span>Travertine #B3B1AF</span>
+        <span class="chip"><span class="sw" style="background:#8C7B66"></span>Vein ≈ #8C7B66</span>
+      </div>
+    </div>
+    <figure>
+      <img src="img/tile_sample.jpg" alt="ترافرتين الحمامات بعروق طولية" loading="lazy">
+      <figcaption>ترافرتين الحمامات كما في صورة المعرض. صورتك نفسها هي المستخدمة في كل الألواح بدون تعديل.</figcaption>
+    </figure>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>العنصر</th><th>يعمل مع البلاطين</th><th>يتعارض</th><th>السبب</th></tr></thead>
+      <tbody>
+        <tr><td>الجدران</td><td>أبيض دافئ منخفض التشبع، greige، حجري، أخضر رمادي</td><td>رمادي بارد صريح، أبيض ناصع بارد</td><td>مع أرضية باردة، الجدار البارد يجعل البيت رمادياً بالكامل. والجدار الدافئ يربط بالترافرتين.</td></tr>
+        <tr><td>الخشب</td><td>بلوط مدخن، جوز متوسط، بلوط طبيعي</td><td>رماد مغسول رمادي بكثرة، خشب أحمر</td><td>الخشب هو مصدر الدفء الأول في هذا البيت.</td></tr>
+        <tr><td>المعادن</td><td>برونز ساتان، شامبين، برونز داكن</td><td>كروم لامع بكثرة، ذهبي لامع</td><td>البرونز يلتقط لون عروق الترافرتين ويكسر برودة الأرضية.</td></tr>
+        <tr><td>الأقمشة والسجاد</td><td>بوكليه، كتان، صوف بملمس واضح بألوان ecru وtaupe</td><td>ألوان مشبعة، رمادي بارد</td><td>الأرضية سادة، فالملمس في الأقمشة مرحب به.</td></tr>
+        <tr><td>الإضاءة</td><td>2700K للمعيشة والنوم، 3000K للمطبخ والحمامات، CRI ≥ 90</td><td>4000K وما فوق</td><td>الإضاءة الباردة على أرضية باردة تعطي إحساس المكتب.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ PAINT ============ -->
+<section id="paint">
+  <span class="eyebrow">03 · Paint options</span>
+  <h2>خيارات الدهانات</h2>
+  <p>كل لوح يجمع البلاط الرئيسي (المستطيل الكبير أسفل الجدار، محاكاة بنفس اللون المقاس) وقطعة من صورة الترافرتين الحقيقية (أسفل اليسار) مع الجدار والسقف والنعلة والخشب والمعدن والقماش. الخشب والمعدن والقماش مولدة رقمياً لمحاكاة اللون والملمس، وليست صوراً لمنتجات محددة. القيم اللونية هي نية التصميم، والمطابقة النهائية تتم من مروحة Jotun أو National بعينة A4 تُدهن على الجدار وتُرى في ضوء النهار وليلاً.</p>
+
+  <article class="opt">
+    <img src="img/board_A.jpg" alt="لوح مواد A: أبيض دافئ مع بلوط طبيعي وشامبين" loading="lazy">
+    <div class="stack">
+      <div class="head"><span class="letter">A</span><h3 class="latin">Warm Off-White</h3><span class="tag ok">آمن ومضيء</span></div>
+      <dl class="spec">
+        <dt>الجدران</dt><dd><span class="sw" style="background:#ECE7DE;display:inline-block"></span> <bdi dir="ltr">#ECE7DE · LRV ≈ 80</bdi></dd>
+        <dt>السقف</dt><dd><bdi dir="ltr">#F5F2EC</bdi></dd>
+        <dt>الأبواب</dt><dd>نفس لون الجدار بلمعة ساتان، أو بلوط طبيعي</dd>
+        <dt>النعلة</dt><dd>مخفية (shadow gap) أو بلون الجدار</dd>
+        <dt>Accent</dt><dd><bdi dir="ltr">#CFC3AF</bdi> (حجري فاتح) لجدار واحد أو نيش</dd>
+        <dt>الخشب</dt><dd>بلوط أبيض طبيعي rift-cut</dd>
+        <dt>المعدن</dt><dd>شامبين ساتان</dd>
+        <dt>الأقمشة</dt><dd>بوكليه عاجي، كتان رملي</dd>
+      </dl>
+      <p class="note">الأكثر إضاءة، وأدفأ من الأرضية بوضوح. خطره أن يبدو البيت فاتحاً بالكامل بلا عمق (أرضية فاتحة وجدار فاتح)، فيحتاج خشباً ونسيجاً بدرجة أعمق.</p>
+    </div>
+  </article>
+
+  <article class="opt">
+    <img src="img/board_B.jpg" alt="لوح مواد B: greige فاتح مع بلوط مدخن وبرونز" loading="lazy">
+    <div class="stack">
+      <div class="head"><span class="letter">B</span><h3 class="latin">Light Greige</h3><span class="tag">توصيتي</span></div>
+      <dl class="spec">
+        <dt>الجدران</dt><dd><span class="sw" style="background:#D9D3C8;display:inline-block"></span> <bdi dir="ltr">#D9D3C8 · LRV ≈ 66</bdi></dd>
+        <dt>السقف</dt><dd><bdi dir="ltr">#EFEBE4</bdi></dd>
+        <dt>الأبواب</dt><dd>بلوط مدخن، أو لون الجدار بدرجة أعمق</dd>
+        <dt>النعلة</dt><dd>بلون الجدار</dd>
+        <dt>Accent</dt><dd><bdi dir="ltr">#A99D8C</bdi> (taupe العروق نفسها)</dd>
+        <dt>الخشب</dt><dd>بلوط مدخن متوسط</dd>
+        <dt>المعدن</dt><dd>برونز ساتان</dd>
+        <dt>الأقمشة</dt><dd>كتان taupe، صوف رمادي بيج</dd>
+      </dl>
+      <p class="note">الجسر بين البلاطين: أدفأ من الأرضية وقريب من قاعدة الترافرتين، فيبدو الانتقال من الصالة للحمام طبيعياً. هذا الأقرب لـ Aman و The Row.</p>
+    </div>
+  </article>
+
+  <article class="opt">
+    <img src="img/board_C.jpg" alt="لوح مواد C: بيج ناعم مع جوز وبراص عتيق" loading="lazy">
+    <div class="stack">
+      <div class="head"><span class="letter">C</span><h3 class="latin">Soft Beige</h3><span class="tag warn">لا أنصح به</span></div>
+      <dl class="spec">
+        <dt>الجدران</dt><dd><span class="sw" style="background:#E4D9C7;display:inline-block"></span> <bdi dir="ltr">#E4D9C7 · LRV ≈ 70</bdi></dd>
+        <dt>السقف</dt><dd><bdi dir="ltr">#F3EDE3</bdi></dd>
+        <dt>الأبواب</dt><dd>جوز</dd>
+        <dt>Accent</dt><dd><bdi dir="ltr">#B89C7A</bdi> (كاراميل)</dd>
+        <dt>الخشب</dt><dd>جوز أمريكي</dd>
+        <dt>المعدن</dt><dd>براص عتيق</dd>
+        <dt>الأقمشة</dt><dd>بوكليه oatmeal، كتان كاراميل</dd>
+      </dl>
+      <p class="note">مع الأرضية الجديدة التعارض أخف مما كان، لكنه ما زال موجوداً: الأرضية الرمادية بجانب البيج الأصفر تبدو أبرد وأقرب للرمادي المتسخ، والترافرتين يبدو رمادياً. لا أنصح به كلون أساسي.</p>
+    </div>
+  </article>
+
+  <article class="opt">
+    <img src="img/board_D.jpg" alt="لوح مواد D: حجري دافئ مع بلوط داكن وبرونز داكن" loading="lazy">
+    <div class="stack">
+      <div class="head"><span class="letter">D</span><h3 class="latin">Warm Stone</h3><span class="tag">للمجالس والنوم</span></div>
+      <dl class="spec">
+        <dt>الجدران</dt><dd><span class="sw" style="background:#C8BEB0;display:inline-block"></span> <bdi dir="ltr">#C8BEB0 · LRV ≈ 52</bdi></dd>
+        <dt>السقف</dt><dd><bdi dir="ltr">#EBE6DE</bdi></dd>
+        <dt>الأبواب</dt><dd>بلوط داكن مدخن</dd>
+        <dt>النعلة</dt><dd><bdi dir="ltr">#B4A999</bdi>، أعمق من الجدار بدرجة</dd>
+        <dt>Accent</dt><dd><bdi dir="ltr">#7D7064</bdi> (mushroom داكن)</dd>
+        <dt>الخشب</dt><dd>بلوط داكن مدخن</dd>
+        <dt>المعدن</dt><dd>برونز داكن</dd>
+        <dt>الأقمشة</dt><dd>صوف حجري، كتان فاتح للتوازن</dd>
+      </dl>
+      <p class="note">أعمق وأكثر احتواءً. LRV 52 أغمق من الأرضية (حوالي 60)، أي أن الجدار سيكون أغمق من الأرض. هذا فخم في غرفة النوم والمكتب، لكنه لا يناسب ممر المستوى الثاني ضعيف الإضاءة.</p>
+    </div>
+  </article>
+
+  <article class="opt">
+    <img src="img/board_E.jpg" alt="لوح مواد E: محايد معاصر مع رماد مغسول وأسود مطفي" loading="lazy">
+    <div class="stack">
+      <div class="head"><span class="letter">E</span><h3 class="latin">Contemporary Neutral</h3><span class="tag warn">بارد مع هذه الأرضية</span></div>
+      <dl class="spec">
+        <dt>الجدران</dt><dd><span class="sw" style="background:#E3E2DE;display:inline-block"></span> <bdi dir="ltr">#E3E2DE · LRV ≈ 76</bdi></dd>
+        <dt>السقف</dt><dd><bdi dir="ltr">#F3F3F0</bdi></dd>
+        <dt>الأبواب</dt><dd>لون الجدار، handleless، إطار مخفي</dd>
+        <dt>Accent</dt><dd><bdi dir="ltr">#3A3835</bdi> (فحمي) بكميات صغيرة</dd>
+        <dt>الخشب</dt><dd>رماد مغسول رمادي</dd>
+        <dt>المعدن</dt><dd>أسود مطفي</dd>
+        <dt>الأقمشة</dt><dd>رمادي ميلانج، أبيض كتاني</dd>
+      </dl>
+      <p class="note">مع أرضية رمادية فاتحة، هذا الخيار يجعل البيت كله رمادياً بارداً. لا أنصح به إلا بخشب دافئ كثير، وهذا يلغي فكرته.</p>
+    </div>
+  </article>
+
+  <article class="opt">
+    <img src="img/board_F.jpg" alt="لوح مواد F: أخضر رمادي معدني مع بلوط وشامبين" loading="lazy">
+    <div class="stack">
+      <div class="head"><span class="letter">F</span><h3 class="latin">Mineral Sage</h3><span class="tag">اختياري</span></div>
+      <dl class="spec">
+        <dt>الجدران</dt><dd><span class="sw" style="background:#CFD0C3;display:inline-block"></span> <bdi dir="ltr">#CFD0C3 · LRV ≈ 62</bdi></dd>
+        <dt>السقف</dt><dd><bdi dir="ltr">#EFEEE7</bdi></dd>
+        <dt>الأبواب</dt><dd>بلوط طبيعي</dd>
+        <dt>Accent</dt><dd><bdi dir="ltr">#7D806C</bdi> (زيتوني رمادي)</dd>
+        <dt>الخشب</dt><dd>بلوط متوسط دافئ</dd>
+        <dt>المعدن</dt><dd>شامبين ساتان</dd>
+        <dt>الأقمشة</dt><dd>بوكليه حجري، كتان زيتوني</dd>
+      </dl>
+      <p class="note">الخيار غير البيج. الأخضر الرمادي يتناغم مع برودة الأرضية، والخشب يربطه بالترافرتين. مناسب جداً لغرف النوم والمكتب، ويمكن استخدامه في غرفة واحدة فقط.</p>
+    </div>
+  </article>
+
+  <p class="note">يمكن الدمج: B للمنزل كله، و D لغرفة النوم الرئيسية والمكتب، و F لغرفة واحدة. بشرط أن يبقى السقف والأبواب والنعلة موحدة في كل المنزل.</p>
+</section>
+
+<!-- ============ DIRECTIONS ============ -->
+<section id="dirs">
+  <span class="eyebrow">04 · Interior design directions</span>
+  <h2>سبعة اتجاهات تصميم</h2>
+  <p>كل اتجاه مربوط بخيار دهان يناسبه. الاختلاف بينها في لغة الأثاث والإضاءة والنجارة والسقف، وليس في درجة البيج فقط.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th></th><th>01 <span class="latin">Warm Contemporary</span></th><th>02 <span class="latin">Modern Saudi</span></th><th>03 <span class="latin">Quiet Luxury</span></th><th>04 <span class="latin">Contemporary Minimal</span></th><th>05 <span class="latin">Warm Natural</span></th><th>06 <span class="latin">Hospitality</span></th><th>07 <span class="latin">Mineral Modernist</span></th></tr></thead>
+      <tbody>
+        <tr><th>Palette</th><td>A أو B</td><td>D + جير</td><td>B</td><td>E</td><td>A + طين</td><td>D</td><td>F</td></tr>
+        <tr><th>Walls</th><td>دهان مطفي</td><td>لياسة جيرية بملمس خفيف، نيشات</td><td>Limewash tone-on-tone</td><td>دهان مطفي تام، بدون زخرفة</td><td>لياسة طينية (clay plaster)</td><td>ألواح مضلعة (fluted) وتنجيد في غرف النوم</td><td>دهان مطفي، جدار واحد limewash</td></tr>
+        <tr><th>Wood</th><td>بلوط طبيعي</td><td>بلوط مدخن وجوز</td><td>بلوط rift ناعم</td><td>رماد مغسول</td><td>جوز، خيزران</td><td>جوز داكن</td><td>بلوط دافئ</td></tr>
+        <tr><th>Metals</th><td>شامبين</td><td>برونز داكن</td><td>شامبين ساتان خافت</td><td>أسود مطفي</td><td>برونز خام</td><td>برونز ساتان</td><td>برونز وشامبين</td></tr>
+        <tr><th>Furniture</th><td>منحنيات ناعمة، أذرع عريضة</td><td>جلسة أرضية حديثة ومجالس منخفضة</td><td>قطع قليلة كبيرة، تنجيد عميق</td><td>خطوط مستقيمة وأرجل رفيعة</td><td>خشب صلب وخيزران وأطراف طبيعية</td><td>أسرّة بظهر مرتفع، كراسي lounge</td><td>قطع منتصف القرن، خشب منحني</td></tr>
+        <tr><th>Lighting</th><td>مخفية + معلقات قماشية</td><td>فوانيس معدنية حديثة بثقوب</td><td>غير مباشرة فقط، بدون سبوتات ظاهرة</td><td>سبوتات trimless وخطية</td><td>معلقات ورقية وخشبية</td><td>طبقات: مخفية وجدارية وطاولة</td><td>جداريات زجاجية مطفية</td></tr>
+        <tr><th>Curtains</th><td>كتان مموج (ripple fold)</td><td>كتان ثقيل + شيفون</td><td>شيفون بعرض الجدار، مخفي في السقف</td><td>رول مخفي</td><td>كتان خام</td><td>مزدوج: blackout + sheer</td><td>كتان زيتوني فاتح</td></tr>
+        <tr><th>Rugs</th><td>صوف سادة</td><td>سدو بألوان محايدة وخطوط رفيعة</td><td>صوف وحرير tone-on-tone</td><td>بدون، أو سادة رمادي</td><td>جوت وصوف</td><td>صوف كثيف بحواف</td><td>صوف بلون حجري</td></tr>
+        <tr><th>Ceiling</th><td>مسطح + cove مخفي</td><td>عوارض خشبية رفيعة في المجلس</td><td>مسطح + شق ستارة وإضاءة محيطية</td><td>مسطح تماماً</td><td>مسطح بملمس</td><td>درجات وcove</td><td>مسطح</td></tr>
+        <tr><th>Joinery</th><td>بلوط بمقابض مخفية</td><td>أبواب بنقوش مشربية مجردة</td><td>ألواح من الأرض للسقف بنفس لون الجدار</td><td>handleless بالكامل</td><td>أرفف مفتوحة</td><td>مضلع + جلد</td><td>بلوط + زجاج مضلع</td></tr>
+        <tr><th>Decor</th><td>فخار، كتب</td><td>مباخر حجرية، خط عربي معاصر</td><td>قطعة فنية واحدة لكل جدار</td><td>لا شيء تقريباً</td><td>نباتات وأواني طين</td><td>كتب، صواني، مرايا</td><td>سيراميك، فن تجريدي</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid3">
+    <div class="dir"><span class="no">01</span><h3 class="latin">Warm Contemporary</h3><div class="strip"><span style="background:#ECE7DE"></span><span style="background:#C9A57A"></span><span style="background:#B79A68"></span><span style="background:#E7E0D2"></span></div><p class="note">مريح وعائلي. أسهل اتجاه في التنفيذ والصيانة.</p></div>
+    <div class="dir"><span class="no">02</span><h3 class="latin">Modern Saudi</h3><div class="strip"><span style="background:#C8BEB0"></span><span style="background:#4A392D"></span><span style="background:#4A3F35"></span><span style="background:#A99D8D"></span></div><p class="note">هوية محلية بدون زخرفة ثقيلة. يحتاج ضبطاً دقيقاً حتى لا يصبح فولكلورياً.</p></div>
+    <div class="dir"><span class="no">03</span><h3 class="latin">Quiet Luxury</h3><div class="strip"><span style="background:#D9D3C8"></span><span style="background:#8B6B4D"></span><span style="background:#6E5A45"></span><span style="background:#BEB3A3"></span></div><p class="note">الأقرب لما تحبه في ÉLAN. التكلفة في الجودة لا في الكمية.</p></div>
+    <div class="dir"><span class="no">04</span><h3 class="latin">Contemporary Minimal</h3><div class="strip"><span style="background:#E3E2DE"></span><span style="background:#B7AC9C"></span><span style="background:#2B2927"></span><span style="background:#BAB8B3"></span></div><p class="note">صارم وهادئ. لا يغفر أخطاء التنفيذ أو الفوضى اليومية.</p></div>
+    <div class="dir"><span class="no">05</span><h3 class="latin">Warm Natural</h3><div class="strip"><span style="background:#E6DCCD"></span><span style="background:#634633"></span><span style="background:#8A6A48"></span><span style="background:#CDBB9C"></span></div><p class="note">دافئ جداً ويعوض برودة الأرضية، لكن خطره أن يقترب من البيج الأصفر.</p></div>
+    <div class="dir"><span class="no">06</span><h3 class="latin">Hospitality</h3><div class="strip"><span style="background:#C8BEB0"></span><span style="background:#3F2F25"></span><span style="background:#6E5A45"></span><span style="background:#D9D1C5"></span></div><p class="note">إحساس الفندق الراقي. مكلف في النجارة ويحتاج تصميم إضاءة متقن.</p></div>
+    <div class="dir"><span class="no">07</span><h3 class="latin">Mineral Modernist</h3><div class="strip"><span style="background:#CFD0C3"></span><span style="background:#B38F6A"></span><span style="background:#A48E6C"></span><span style="background:#7D806C"></span></div><p class="note">اقتراحي الإضافي. مختلف فعلاً عن البقية ويربط برودة الأرضية بدفء الترافرتين.</p></div>
+  </div>
+</section>
+
+<!-- ============ RAILINGS ============ -->
+<section id="rail">
+  <span class="eyebrow">05 · Stair balustrade</span>
+  <h2>خيارات الدرابزين</h2>
+  <p>درج وحدتك بقلبتين متوازيتين بعرض إجمالي 2.20 م وطول 3.07 م، ونائمة حوالي 30.5 سم، ويخدم المستويين بنفس التصميم. الرسومات أدناه واجهات تخطيطية بمقياس صحيح نسبياً (ارتفاع الدرابزين 1000 مم على قلبة قائمها حوالي 170 مم (مفترض حتى يصلني مقطع الدرج) ونائمها 280–305 مم). الصور الواقعية للدرابزين تأتي في مرحلة الـ renders بعد الاختيار.</p>
+  <div class="grid3" id="rails"></div>
+  <p class="note">اشتراطات عامة لكل الخيارات: ارتفاع لا يقل عن 900 مم على القلبة و1000–1100 مم عند البسطات والفراغات المفتوحة، ولا فتحات تسمح بمرور كرة 100 مم، ولا عناصر أفقية يتسلقها الأطفال. هذا مهم لأنكم تخططون لتكوين أسرة. يجب مطابقة الأرقام مع كود البناء السعودي عند التنفيذ.</p>
+</section>
+
+<!-- ============ FURNITURE ============ -->
+<section id="furn">
+  <span class="eyebrow">06 · Furniture strategy</span>
+  <h2>خيارات الأثاث</h2>
+  <p>سأرسم توزيع الأثاث من الصفر على مستويي وحدتك بعد تأكيد حدودها. ملاحظة من المسقط: وحدتك ليس فيها مجلس مستقل، فالمعيشة في المستوى الأول هي فراغ استقبال الضيوف، والصالة العلوية للعائلة. الجدول يوضح الخيارات التي سأرسمها لكل نوع فراغ والقواعد التي تحكمها.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>الفراغ</th><th>الخيار 1</th><th>الخيار 2</th><th>الخيار 3</th><th>قواعد ثابتة</th></tr></thead>
+      <tbody>
+        <tr><td>المعيشة / الاستقبال (المستوى الأول)</td><td>كنب منفرد على شكل U مواجه للمدخل</td><td>جلسة أرضية حديثة منخفضة (h≈35 سم) على محيط الغرفة</td><td>مختلط: كنبتان متقابلتان + كرسيان + طاولة وسطية طويلة</td><td>ممر 90 سم على الأقل من الباب، لا ظهر كنبة للمدخل، الطاولة على بعد 40–45 سم من المقعد</td></tr>
+        <tr><td>الصالة العائلية (المستوى العلوي)</td><td>كنبة زاوية مواجهة للتلفاز</td><td>كنبتان متقابلتان والتلفاز جانبي (للحديث أولاً)</td><td>كنبة + كرسيان lounge حول سجادة كبيرة</td><td>مسافة مشاهدة شاشة 75" بين 2.5 و3.2 م، السجادة تحت الأرجل الأمامية على الأقل</td></tr>
+        <tr><td>الطعام</td><td>طاولة مستطيلة 240×100 لـ 8</td><td>طاولة بيضاوية 260×110 (حركة أسهل)</td><td>طاولة دائرية 150 سم لـ 6 مع امتداد</td><td>90 سم خلف الكراسي، و120 سم إذا كان خلفها ممر</td></tr>
+        <tr><td>غرف النوم</td><td>سرير على الجدار المقابل للباب</td><td>سرير بظهر عريض مع جلسة قراءة عند النافذة</td><td>سرير + مكتب صغير (غرف الأطفال)</td><td>70 سم على جانبي السرير، ولا يواجه السرير الباب مباشرة إن أمكن، وخزائن 60 سم عمق</td></tr>
+        <tr><td>المدخل والممرات</td><td>كونسول ومرآة</td><td>مقعد وخزانة أحذية مدمجة</td><td>فارغ بالكامل مع إضاءة جدارية</td><td>عرض صافٍ 120 سم للممر الرئيسي، ولا أثاث في ممر السطح</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ BATHS ============ -->
+<section id="bath">
+  <span class="eyebrow">06b · Bathrooms</span>
+  <h2>الحمامات حول الترافرتين</h2>
+  <p>الترافرتين ثابت في كل الحمامات، أرضيات وجدراناً بالكامل. ما يتغير بين الخيارات هو المغسلة والخشب والمرآة والإضاءة والخلاطات. وحدتك فيها أربع دورات مياه: دورة ضيوف في المستوى الأول (عرض 1.425 م)، وفي المستوى الثاني حمام رئيسي 2.67 م²، وحمام الغرفة الصغيرة 3.48 م²، وحمام المكتب 4.13 م². كلها صغيرة، لذلك الأولوية للقطع المعلقة وتقليل الخطوط.</p>
+
+  <div class="grid2">
+    <article class="rail">
+      <img src="img/bath_1.jpg" alt="خيار حمام BA-1: بلوط مدخن وبرونز" loading="lazy">
+      <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap"><span class="latin" style="font-size:26px;color:var(--accent)">BA-1</span><h3 class="latin">Smoked Oak × Bronze</h3><span class="tag">توصيتي</span></div>
+      <dl class="spec">
+        <dt>المغسلة</dt><dd>وحدة معلقة من بلوط مدخن بواجهة مضلعة ناعمة، وسطح solid surface عاجي بحوض مدمج</dd>
+        <dt>المرآة</dt><dd>دائرية أو مستطيلة بزوايا ناعمة بإطار برونز رفيع، مع إضاءة خلفية</dd>
+        <dt>الخلاطات</dt><dd>برونز مصقول بالفرشاة (brushed bronze PVD)، مخفية في الجدار</dd>
+        <dt>الإضاءة</dt><dd>إضاءة خلف المرآة 2700–3000K، سبوت IP44 فوق الشاور، شريط LED في نيش الشاور</dd>
+      </dl>
+      <p class="note">نفس خشب ومعدن باقة Quiet Luxury، فيمتد البيت داخل الحمام بدون انقطاع.</p>
+    </article>
+    <article class="rail">
+      <img src="img/bath_2.jpg" alt="خيار حمام BA-2: حجر متجانس وشامبين" loading="lazy">
+      <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap"><span class="latin" style="font-size:26px;color:var(--accent)">BA-2</span><h3 class="latin">Monolithic Stone</h3></div>
+      <dl class="spec">
+        <dt>المغسلة</dt><dd>كتلة مكسوة بنفس الترافرتين بزوايا 45° بدون زوايا معدنية، وحوض مدمج أو حوض حجري فوقها</dd>
+        <dt>المرآة</dt><dd>مرآة بدون إطار غائرة في الجدار بإضاءة مخفية حولها</dd>
+        <dt>الخلاطات</dt><dd>شامبين ساتان</dd>
+        <dt>الإضاءة</dt><dd>غير مباشرة فقط: خلف المرآة وتحت المغسلة، وسبوت واحد في الشاور</dd>
+      </dl>
+      <p class="note">الأكثر فخامة وهدوءاً، ويشبه فنادق Aman. يحتاج بلاطاً إضافياً وحرفية عالية في قص الزوايا.</p>
+    </article>
+    <article class="rail">
+      <img src="img/bath_3.jpg" alt="خيار حمام BA-3: جوز داكن وبرونز داكن" loading="lazy">
+      <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap"><span class="latin" style="font-size:26px;color:var(--accent)">BA-3</span><h3 class="latin">Walnut × Dark Bronze</h3></div>
+      <dl class="spec">
+        <dt>المغسلة</dt><dd>وحدة معلقة من جوز داكن بمقابض مخفية</dd>
+        <dt>المرآة</dt><dd>إطار برونز داكن، مع إضاءتين جداريتين على جانبيها</dd>
+        <dt>الخلاطات</dt><dd>برونز داكن أو gunmetal</dd>
+        <dt>الإضاءة</dt><dd>جداريات بزجاج مطفي 2700K + سبوت للشاور</dd>
+      </dl>
+      <p class="note">الأدفأ والأكثر تبايناً. يناسب باقة Modern Saudi والحمام الرئيسي. في الحمامات الصغيرة جداً قد يثقل المكان.</p>
+    </article>
+    <article class="rail">
+      <img src="img/bath_4.jpg" alt="خيار حمام BA-4: بلوط طبيعي ونيكل" loading="lazy">
+      <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap"><span class="latin" style="font-size:26px;color:var(--accent)">BA-4</span><h3 class="latin">Natural Oak × Brushed Nickel</h3></div>
+      <dl class="spec">
+        <dt>المغسلة</dt><dd>بلوط طبيعي فاتح وسطح أبيض دافئ</dd>
+        <dt>المرآة</dt><dd>إطار نيكل مصقول بالفرشاة، أو خزانة مرآة مدمجة</dd>
+        <dt>الخلاطات</dt><dd>نيكل أو ستانلس مصقول بالفرشاة</dd>
+        <dt>الإضاءة</dt><dd>خلف المرآة 3000K + سبوت</dd>
+      </dl>
+      <p class="note">الأخف والأكثر إشراقاً، ويعمل مع الجانب البارد من الأرضية. أقل دفئاً مع الترافرتين من BA-1.</p>
+    </article>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>قرار ثابت في كل الخيارات</th><th>السبب</th></tr></thead>
+      <tbody>
+        <tr><td>مرحاض معلق بخزان مخفي، ومغسلة معلقة</td><td>الأرضية تظهر كاملة تحت القطع، فيبدو الحمام الصغير أكبر، والتنظيف أسهل.</td></tr>
+        <tr><td>تجنب الأسود المطفي والكروم اللامع في الخلاطات</td><td>مياه الرياض عسرة، وبقع الكلس تظهر بوضوح على الأسود المطفي والكروم اللامع. التشطيبات المصقولة بالفرشاة تخفيها أفضل.</td></tr>
+        <tr><td>ترويبة إيبوكسي بلون قاعدة الترافرتين في الشاور</td><td>لا تمتص الماء ولا تتلون، والفاصل يختفي بصرياً.</td></tr>
+        <tr><td>زوايا خارجية مقصوصة 45° بدون زوايا معدنية</td><td>تفصيل صغير يصنع الفرق بين حمام عادي وحمام فاخر.</td></tr>
+        <tr><td>نيش الشاور ومحاور الخلاطات على خطوط الفواصل</td><td>أي قطع عشوائي يكسر العروق الطولية ويظهر كخطأ.</td></tr>
+        <tr><td>تصريف خطي بجانب الجدار وزجاج شاور بدون إطار</td><td>أرضية الشاور تبقى بلاطة كاملة بميل في اتجاه واحد، فتستمر العروق.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">دورة مياه الضيوف في المستوى الأول (عرض 1.425 م) تستحق معالجة مختلفة قليلاً لأن الضيوف يرونها: نفس الترافرتين، ومغسلة صغيرة بعمق 35–40 سم، ومرآة أعلى وأضيق، وإضاءة أدفأ.</p>
+</section>
+
+<!-- ============ CONCEPTS ============ -->
+<section id="concepts">
+  <span class="eyebrow">07 · Concept packages</span>
+  <h2>ثلاث باقات متناسقة</h2>
+  <p>هذه أفضل التركيبات برأيي. كل باقة تجمع دهاناً واتجاهاً ودرابزيناً وأثاثاً يعمل مع بعضه. بعد اختيارك سأنتج لكل باقة صوراً لنفس الفراغات من نفس زوايا الكاميرا حتى تكون المقارنة عادلة.</p>
+
+  <article class="concept">
+    <img src="img/board_B.jpg" alt="باقة Quiet Luxury" loading="lazy">
+    <div class="body">
+      <div class="head" style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap"><span class="eyebrow">Concept 01</span><h3 class="latin" style="font-size:26px">Quiet Luxury</h3><span class="tag">توصيتي الأولى</span></div>
+      <dl class="spec">
+        <dt>Paint</dt><dd>B Light Greige للكل، وD لغرفة النوم الرئيسية والمكتب</dd>
+        <dt>Wood</dt><dd>بلوط rift مدخن متوسط</dd>
+        <dt>Metal</dt><dd>برونز ساتان</dd>
+        <dt>Railing</dt><dd>B: زجاج + handrail بلوط</dd>
+        <dt>Furniture</dt><dd>قطع قليلة كبيرة، تنجيد بوكليه وكتان، سجاد صوف وحرير tone-on-tone</dd>
+        <dt>Lighting</dt><dd>غير مباشرة، 2700K، بدون سبوتات ظاهرة في المعيشة</dd>
+        <dt>Bathrooms</dt><dd>BA-1، أو BA-2 للحمام الرئيسي</dd>
+      </dl>
+    </div>
+  </article>
+
+  <article class="concept">
+    <img src="img/board_D.jpg" alt="باقة Modern Saudi" loading="lazy">
+    <div class="body">
+      <div class="head" style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap"><span class="eyebrow">Concept 02</span><h3 class="latin" style="font-size:26px">Modern Saudi</h3></div>
+      <dl class="spec">
+        <dt>Paint</dt><dd>D Warm Stone مع لياسة جيرية في معيشة الاستقبال، وA للممرات</dd>
+        <dt>Wood</dt><dd>بلوط داكن مدخن + جوز</dd>
+        <dt>Metal</dt><dd>برونز داكن</dd>
+        <dt>Railing</dt><dd>F: جدار مصمت بلون الجدار مع handrail مجوّف ومضاء</dd>
+        <dt>Furniture</dt><dd>جلسة استقبال منخفضة حديثة، سجاد سدو محايد، أبواب بنقوش مشربية مجردة</dd>
+        <dt>Lighting</dt><dd>فوانيس معدنية حديثة + cove</dd>
+        <dt>Bathrooms</dt><dd>BA-3</dd>
+      </dl>
+    </div>
+  </article>
+
+  <article class="concept">
+    <img src="img/board_F.jpg" alt="باقة Mineral Modernist" loading="lazy">
+    <div class="body">
+      <div class="head" style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap"><span class="eyebrow">Concept 03</span><h3 class="latin" style="font-size:26px">Warm Contemporary × Mineral</h3></div>
+      <dl class="spec">
+        <dt>Paint</dt><dd>A Warm Off-White للفراغات العامة، وF Mineral Sage لغرف النوم والمكتب</dd>
+        <dt>Wood</dt><dd>بلوط طبيعي دافئ</dd>
+        <dt>Metal</dt><dd>شامبين ساتان</dd>
+        <dt>Railing</dt><dd>D: قوائم رفيعة بلون برونز/شامبين PVD</dd>
+        <dt>Furniture</dt><dd>منحنيات ناعمة، قطع منتصف القرن، زجاج مضلع في النجارة</dd>
+        <dt>Lighting</dt><dd>معلقات قماشية وزجاج مطفي، 2700–3000K</dd>
+        <dt>Bathrooms</dt><dd>BA-1 بخشب أفتح، أو BA-4</dd>
+      </dl>
+    </div>
+  </article>
+</section>
+
+<!-- ============ VIZ ============ -->
+<section id="viz">
+  <span class="eyebrow">08 · Photorealistic visualization</span>
+  <h2>الصور الواقعية: لماذا لم تُنتج بعد وكيف ستُنتج</h2>
+  <p>لم أنتج صور غرف في هذه المرحلة لسببين. الأول أن الصور تأتي بعد اختيارك للاتجاه حتى لا تُصرف على خيارات مستبعدة. الثاني أن شرطك "لا تغيّر هندسة الغرفة" لا تحققه مولدات الصور العامة، فهي تخترع النوافذ والأبعاد. الطريقة التي أقترحها:</p>
+  <ol class="list">
+    <li>بناء نموذج ثلاثي الأبعاد من جدران وفتحات الـ DWG نفسها، بعد تأكيد ارتفاع السقف ومقاسات الأبواب والنوافذ.</li>
+    <li>استخدام البلاط الرئيسي والترافرتين كخامات حقيقية بالمقاس واتجاه التركيب الفعلي. أحتاج لذلك صورة مستقيمة من الأعلى لبلاطة نظيفة من كل نوع في ضوء النهار.</li>
+    <li>إضاءة فيزيائية: شمس الرياض حسب اتجاه الشمال الفعلي للمبنى، وإضاءة صناعية 2700–3000K.</li>
+    <li>نفس زوايا الكاميرا لكل باقة: المعيشة والطعام والمطبخ (المستوى الأول)، الصالة العائلية، غرفة النوم الرئيسية، الدرج، حمام واحد.</li>
+  </ol>
+  <p class="note">سأتحقق من جاهزية أدوات الـ rendering في بيئة العمل عند البدء، وإذا لم تعطِ جودة تصوير معماري حقيقي سأخبرك بذلك بوضوح بدل تسليم صور مولدة لا تمثل منزلك.</p>
+</section>
+
+<!-- ============ QUESTIONS ============ -->
+<section id="questions">
+  <span class="eyebrow">Design assumptions / questions</span>
+  <h2>أسئلة يجب حسمها قبل المرحلة التالية</h2>
+  <ol class="q">
+    <li><div><strong>صورتان نظيفتان للبلاطين:</strong> بلاطة رئيسية بعد مسحها، وبلاطة ترافرتين، كل واحدة من الأعلى في ضوء النهار وبجانبها ورقة A4 بيضاء. هذا هو الشيء الوحيد الذي يثبت اللون الحقيقي ويحدد درجة الدهان بدقة.</div></li>
+    <li><div><strong>مقاس البلاطين:</strong> البلاط الرئيسي يبدو 60×120 أو أكبر، والترافرتين كذلك. وهل الترافرتين طبيعي أم بورسلين؟ هذا يحدد إمكانية قص الزوايا 45° ومطابقة العروق.</div></li>
+    <li><div><strong>درجات السلم:</strong> هل هي من البلاط الرئيسي؟</div></li>
+    <li><div><strong>باب الدخول:</strong> أين باب الوحدة الرئيسي؟ في المستوى الأول بجانب الدرج، أم من البسطة المسماة Entrance في المستوى الثاني؟</div></li>
+    <li><div><strong>اتجاه الشمال وارتفاع الأسقف:</strong> لم أجدهما في الملفات.</div></li>
+    <li><div><strong>النوافذ والأبواب:</strong> لون الألمنيوم المركب، وهل الأبواب مختارة؟</div></li>
+    <li><div><strong>الغرفة الصغيرة 7.8 م²:</strong> غرفة عاملة كما في الرسم، أم غرفة ضيوف أو غرفة طفل ثانية؟</div></li>
+    <li><div><strong>الحمامات:</strong> هل التمديدات (مواقع المرحاض والمغسلة والشاور) منفذة؟ إذا كانت منفذة فالخيارات تتكيف معها، وإذا لم تكن فيمكن تحسين التوزيع.</div></li>
+  </ol>
+</section>
+
+<section>
+  <span class="eyebrow">Next step</span>
+  <h2>المطلوب منك</h2>
+  <ul class="list">
+    <li>اختيار خيار أو خيارين من الدهانات (A–F).</li>
+    <li>اختيار اتجاهين أو ثلاثة (01–07)، أو إحدى الباقات الثلاث كما هي.</li>
+    <li>اختيار درابزين أو اثنين (A–F).</li>
+    <li>اختيار خيار أو خيارين للحمامات (BA-1 إلى BA-4).</li>
+    <li>الصور النظيفة للبلاطين (السؤال 1).</li>
+  </ul>
+</section>
+
+</div>
+
+<script>
+(function(){
+  // Stair elevation: 8 risers at 170 mm, treads 280 mm. Scale 0.12 px/mm.
+  var s=0.12, rise=170, run=280, n=8, h=1000;
+  var ox=30, oy=40+n*rise*s+h*s*0.1;
+  function P(x,y){return (ox+x*s).toFixed(1)+','+(oy-y*s).toFixed(1)}
+  var W=ox*2+n*run*s+20, H=oy+20;
+  function stair(){
+    var d='M'+P(0,0);
+    for(var i=0;i<n;i++){d+=' L'+P(i*run,(i+1)*rise)+' L'+P((i+1)*run,(i+1)*rise);}
+    d+=' L'+P(n*run,0)+' Z';
+    return '<path d="'+d+'" fill="var(--accent-soft)" stroke="currentColor" stroke-width="1"/>';
+  }
+  function nose(i){return {x:i*run+run/2,y:(i+1)*rise}}
+  function lineAt(off,cls){var a=nose(0),b=nose(n-1);return '<line x1="'+P(a.x,a.y+off).split(',')[0]+'" y1="'+P(a.x,a.y+off).split(',')[1]+'" x2="'+P(b.x,b.y+off).split(',')[0]+'" y2="'+P(b.x,b.y+off).split(',')[1]+'" '+cls+'/>'}
+  function glass(){var a=nose(0),b=nose(n-1);return '<path d="M'+P(a.x-run/2,a.y-60)+' L'+P(b.x+run/2,b.y-60)+' L'+P(b.x+run/2,b.y+h-40)+' L'+P(a.x-run/2,a.y+h-40)+' Z" fill="rgba(140,170,170,.18)" stroke="rgba(110,140,140,.9)" stroke-width="1"/>'}
+  function posts(step,color,wd){var o='';for(var i=0;i<n;i++){for(var k=0;k<step;k++){var x=i*run+(k+0.5)*run/step,y=(i+1)*rise;o+='<line x1="'+P(x,y).split(',')[0]+'" y1="'+P(x,y).split(',')[1]+'" x2="'+P(x,y+h).split(',')[0]+'" y2="'+P(x,y+h).split(',')[1]+'" stroke="'+color+'" stroke-width="'+wd+'"/>';}}return o}
+  var bronze='#7A6245', champ='#B8A078', oak='#A98158', black='currentColor';
+  var R=[
+    {k:'A',t:'Frameless glass',d:'زجاج مقسى مزدوج 10+10 مم مثبت في قناة مخفية داخل الدرج. أخف بصرياً وأفضل خيار ليبقى البلاط والضوء ظاهرين. يحتاج تنظيفاً مستمراً.',svg:glass()+lineAt(h-40,'stroke="rgba(110,140,140,.9)" stroke-width="1.5"')},
+    {k:'B',t:'Glass + oak handrail',d:'نفس الزجاج مع handrail بلوط مصمت 50×40 مم. الخشب يربط الدرج بالأبواب والنجارة ويعطي ملمساً دافئاً عند اللمس. توصيتي لـ Quiet Luxury.',svg:glass()+lineAt(h,'stroke="'+oak+'" stroke-width="5" stroke-linecap="round"')},
+    {k:'C',t:'Slim black steel',d:'قوائم حديد أسود مطفي 12×40 مم بمسافة صافية 90 مم و handrail نحيف. حاد ومعاصر، يعمل مع E. الأسود قد يبدو ثقيلاً إذا تكرر في المنزل.',svg:posts(3,black,1.6)+lineAt(h,'stroke="currentColor" stroke-width="3"')},
+    {k:'D',t:'Bronze / champagne',d:'نفس الإيقاع لكن ستانلس بطلاء PVD برونز أو شامبين. أغلى من الأسود، لكنه يتكلم نفس لغة البلاط الدافئة ويبدو فخماً دون بهرجة.',svg:posts(3,champ,1.8)+lineAt(h,'stroke="'+bronze+'" stroke-width="4" stroke-linecap="round"')},
+    {k:'E',t:'Vertical screen',d:'شاشة عمودية من الأرض إلى السقف من شرائح بلوط أو معدن. تصبح عنصراً معمارياً وتفصل الدرج عن المعيشة. ممتازة للخصوصية لكنها تحجب بعض الضوء.',svg:posts(5,oak,2.4)+'<line x1="'+P(0,n*rise+h+300).split(',')[0]+'" y1="'+(oy-(n*rise+h+300)*s)+'" x2="'+P(n*run,0).split(',')[0]+'" y2="'+(oy-(n*rise+h+300)*s)+'" stroke="'+oak+'" stroke-width="3"/>'},
+    {k:'F',t:'Solid upstand, lit rail',d:'جدار مصمت بلون الجدار أو مكسو بألواح حتى 1000 مم، مع مجرى handrail محفور فيه إضاءة LED خافتة. الأكثر معمارية وهدوءاً، يناسب Modern Saudi و Quiet Luxury.',svg:(function(){var a=nose(0),b=nose(n-1);return '<path d="M'+P(a.x-run/2,a.y-60)+' L'+P(b.x+run/2,b.y-60)+' L'+P(b.x+run/2,b.y+h)+' L'+P(a.x-run/2,a.y+h)+' Z" fill="#D9D3C8" stroke="currentColor" stroke-width="1"/>'})()+lineAt(h-90,'stroke="#F2D9A6" stroke-width="3"')}
+  ];
+  var host=document.getElementById('rails');
+  host.innerHTML=R.map(function(r){
+    return '<div class="rail"><svg viewBox="0 0 '+W.toFixed(0)+' '+H.toFixed(0)+'" role="img" aria-label="درابزين '+r.k+'">'+
+      '<line x1="0" y1="'+oy+'" x2="'+W+'" y2="'+oy+'" stroke="#9A958F" stroke-width="3"/>'+stair()+r.svg+'</svg>'+
+      '<div style="display:flex;gap:10px;align-items:baseline"><span class="latin" style="font-size:28px;color:var(--accent)">'+r.k+'</span><h3 class="latin">'+r.t+'</h3></div><p class="note">'+r.d+'</p></div>';
+  }).join('');
+})();
+</script>
