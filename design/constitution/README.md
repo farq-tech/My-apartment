@@ -13,5 +13,5 @@ Approved by the owner on the main living room. It applies to every room, with va
 | Lighting | Paper lantern pendants, linen lamps, LED coves and lit niches. |
 | Accents | Sage / butter yellow / rust. Accents only, never whole rooms. |
 | Rooms | Master: dusty blush + ivory. Child: butter accent only. Family lounge: sage + butter. Greenhouse: approved as is. |
-| Bathrooms | Travertine on the floor and in wet zones only (shower + vanity wall). Other walls warm white tadelakt. Oak vanity, arched backlit mirror, brass. |
+| Bathrooms | LOCKED: travertine vein-cut tile (see bathroom_travertine_tile.png) on the floor and ALL walls, floor to ceiling. Medium oak floating vanity, arched backlit mirror, brass sconces and fittings. |
 | Circulation | Every corridor/stair wall gets one composed moment: an arched niche with a console, artwork or sconces, and a runner. |
