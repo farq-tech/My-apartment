@@ -7,7 +7,7 @@ BASE = ('Turn this 3D render into an ultra photorealistic architectural interior
         'Keep the exact room geometry, camera angle, walls, doors, windows, ceiling and every furniture piece exactly as in the render: '
         'do not add, remove, replace or move anything; only make materials, light and textures photographic. '
         'Windows stay flush windows with a solid wall below the sill: no balconies, no railings, no sliding doors, no city towers outside. '
-        'Keep the floor exactly as it is: light warm grey marble-look 120x60 ceramic tiles with soft subtle veining and thin joints, satin finish. '
+        'Keep the floor exactly as it is: light grey 60x120 porcelain tiles, near-plain with very soft subtle veining, thin grey joints, satin matte finish. '
         'Matte painted walls in warm mushroom taupe exactly as in the render, smoked oak joinery, satin bronze details, bright soft natural daylight, '
         'realistic shadows and reflections, calm quiet-luxury styling, high-end interior photography. ')
 

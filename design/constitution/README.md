@@ -8,6 +8,7 @@ Approved by the owner on the main living room. It applies to every room, with va
 | Wood | Pale limed oak only. No dark brown wood walls anywhere. |
 | Signature | Lit arched niches, plus a thin band of Najdi triangular relief in one focal wall per space. |
 | Fabrics | Oat linen, ivory boucle, cane. |
+| Main floor | LOCKED: 60x120 porcelain in light grey, near-plain with very soft veining, thin grey joints (see main_floor_tile_site.png). Walls go greige with a grey undertone (not yellow sand) to sit with the cool floor. |
 | Stone | Honed travertine for tops and tables. The floor tile is locked. |
 | Metal | Brushed brass, used sparingly. |
 | Lighting | Paper lantern pendants, linen lamps, LED coves and lit niches. |
