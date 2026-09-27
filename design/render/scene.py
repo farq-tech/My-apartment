@@ -631,6 +631,8 @@ def curtain(x0, y0, x1, y1, z0, z1, m=None, name='curt'):
     L_ = abs(x1 - x0) if horiz else abs(y1 - y0)
     n = max(4, int(L_ / 0.12))
     for i in range(n):
+        if 0.22 * n < i < 0.78 * n:
+            continue  # curtains drawn open at both sides; window and sill stay visible
         off = 0.03 * math.sin(i * math.pi / 2)
         if horiz:
             xa = x0 + i * (x1 - x0) / n
