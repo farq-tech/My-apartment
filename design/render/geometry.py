@@ -42,7 +42,8 @@ L02_WALLS = [
     # nanny room / bath / terrace
     (0.2, 3.0, 5.35, 3.2, [(3.1, 4.4, 0.9, 2.4, 'window')]),
     (1.6, 3.2, 1.8, 5.5, [(3.45, 4.2, 0.0, 2.3, 'door')]),
-    (5.2, 0.2, 5.35, 3.0, [(0.8, 2.2, 0.0, 2.6, 'glass')]),
+    # greenhouse lounge: full-height glass wall with a glass door between the family lounge and the greenhouse
+    (5.2, 0.2, 5.35, 3.0, [(0.2, 3.0, 0.0, 3.0, 'glass')]),
     # corridor right wall + shaft (solid) + kids left wall
     (6.85, 4.3, 8.1, 7.9, []),
     # kids room bottom wall (living top wall)
