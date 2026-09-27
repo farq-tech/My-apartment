@@ -64,7 +64,7 @@ def tile_floor_mat():
     m, N, L = node_mat('floor_tile')
     b = N['Principled BSDF']
     tex = N.new('ShaderNodeTexImage')
-    tex.image = bpy.data.images.load(os.path.join(IMG, 'floor_marble.jpg'))
+    tex.image = bpy.data.images.load(os.path.join(IMG, 'floor_porcelain.jpg'))
     tex.projection = 'BOX'
     tc = N.new('ShaderNodeTexCoord')
     mp = N.new('ShaderNodeMapping')
@@ -97,12 +97,12 @@ def travertine_mat():
     m, N, L = node_mat('travertine')
     b = N['Principled BSDF']
     tex = N.new('ShaderNodeTexImage')
-    tex.image = bpy.data.images.load(os.path.join(IMG, 'travertine_clean.jpg'))
+    tex.image = bpy.data.images.load(os.path.join(IMG, 'travertine_site.jpg'))
     tex.projection = 'BOX'
     tex.projection_blend = 0.15
     tc = N.new('ShaderNodeTexCoord')
     mp = N.new('ShaderNodeMapping')
-    mp.inputs['Scale'].default_value = (1 / 0.6, 1 / 0.6, 1 / 0.6)
+    mp.inputs['Scale'].default_value = (1 / 1.2, 1 / 1.2, 1 / 1.2)
     L.new(tc.outputs['Object'], mp.inputs['Vector'])
     L.new(mp.outputs['Vector'], tex.inputs['Vector'])
     br = N.new('ShaderNodeTexBrick')
@@ -111,8 +111,8 @@ def travertine_mat():
     br.inputs['Brick Width'].default_value = 0.6
     br.inputs['Row Height'].default_value = 1.2
     br.inputs['Scale'].default_value = 1.0
-    br.inputs['Color1'].default_value = (1.15, 1.15, 1.15, 1)
-    br.inputs['Color2'].default_value = (1.12, 1.12, 1.12, 1)
+    br.inputs['Color1'].default_value = (1.0, 1.0, 1.0, 1)
+    br.inputs['Color2'].default_value = (0.98, 0.98, 0.98, 1)
     br.inputs['Mortar'].default_value = (0.7, 0.68, 0.65, 1)
     L.new(tc.outputs['Object'], br.inputs['Vector'])
     mix = N.new('ShaderNodeMix')
@@ -195,23 +195,23 @@ def glass_mat():
 
 
 M = dict(
-    wall=mat('wall', os.environ.get('WALL', '#BFB2A2'), 0.85),
+    wall=mat('wall', os.environ.get('WALL', '#B7ADA1'), 0.85),
     ceiling=mat('ceiling', '#EFEBE4', 0.9),
     floor=tile_floor_mat(),
     trav=travertine_mat(),
-    oak=wood_mat('smoked_oak', '#8B6B4D'),
-    oak_light=wood_mat('natural_oak', '#C9A57A'),
-    walnut=wood_mat('walnut', '#5A4131'),
+    oak=wood_mat('smoked_oak', '#A27D57'),
+    oak_light=wood_mat('natural_oak', '#B48D66'),
+    walnut=wood_mat('walnut', '#8E6C4B'),
     bronze=mat('bronze', '#6E5A45', 0.32, 1.0),
     champ=mat('champagne', '#B8A078', 0.3, 1.0),
-    boucle=mat('boucle', '#E7E0D2', 0.95, sheen=0.6),
-    linen=mat('linen_taupe', '#BEB3A3', 0.9, sheen=0.3),
-    linen_ivory=mat('linen_ivory', '#EDE7DC', 0.9, sheen=0.3),
-    wool_rug=mat('wool_rug', '#D8CFC1', 1.0, sheen=0.4),
-    rug_taupe=mat('rug_taupe', '#B5A796', 1.0, sheen=0.4),
+    boucle=mat('boucle', '#B39170', 0.95, sheen=0.6),
+    linen=mat('linen_taupe', '#9A8876', 0.9, sheen=0.3),
+    linen_ivory=mat('linen_ivory', '#D6CBBB', 0.9, sheen=0.3),
+    wool_rug=mat('wool_rug', '#B3A491', 1.0, sheen=0.4),
+    rug_taupe=mat('rug_taupe', '#9E8E7B', 1.0, sheen=0.4),
     stone_top=mat('stone_top', '#E9E4DB', 0.25, coat=0.3),
     glass=glass_mat(),
-    sheer=mat('sheer', '#F4F0E8', 0.9, trans=0.65),
+    sheer=mat('sheer', '#E2D9CC', 0.9, trans=0.6),
     dark=mat('dark_screen', '#111111', 0.15, coat=0.6),
     white_ceramic=mat('ceramic', '#F5F3EF', 0.12, coat=0.5),
     mirror=mat('mirror', '#FFFFFF', 0.0, 1.0),
@@ -220,7 +220,7 @@ M = dict(
     pot=mat('pot', '#CBBFAE', 0.8),
     led=mat('led', '#FFFFFF', 0.5, emit='#FFD9A8', estr=6.0),
     lamp=mat('lampshade', '#F6EFE2', 0.8, trans=0.3, emit='#FFD9A8', estr=1.2),
-    ivory_panel=mat('ivory_panel', '#F3EEE3', 0.6),
+    ivory_panel=mat('ivory_panel', '#D9CFC1', 0.6),
     yellow=mat('yellow_soft', '#F1DE9E', 0.9, sheen=0.4),
     yellow_wall=wallpaper_mat(),
     art=mat('art', '#C9BBA4', 0.9),
@@ -850,7 +850,7 @@ for yy in (5.2, 6.2, 7.2):
     downlight(6.1, yy, z + CEIL)
 # --- family lounge (x 5.35-10.9, y 0.2-4.3)
 rug(7.2, 0.8, 10.2, 3.4, z, M['wool_rug'], 'lounge_rug')
-for o in sofa(6.4, 0.7, 3.0, 1.05, 'E', name='sofa_fam'):
+for o in sofa(6.4, 0.7, 3.0, 1.05, 'E', M['linen'], name='sofa_fam'):
     o.location.z += z
 for o in coffee_round(8.3, 2.05, 0.55, z):
     pass
