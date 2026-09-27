@@ -631,6 +631,8 @@ def curtain(x0, y0, x1, y1, z0, z1, m=None, name='curt'):
     L_ = abs(x1 - x0) if horiz else abs(y1 - y0)
     n = max(4, int(L_ / 0.12))
     for i in range(n):
+        if 0.22 * n < i < 0.78 * n:
+            continue  # curtains drawn open at both sides; window and sill stay visible
         off = 0.03 * math.sin(i * math.pi / 2)
         if horiz:
             xa = x0 + i * (x1 - x0) / n
@@ -893,97 +895,25 @@ vanity(0.22, 4.6, 0.68, 5.3, z, top_m=M['trav'], name='nb_van')
 mirror_panel(0.215, 4.7, 0.22, 5.2, z + 1.05, z + 1.95, 'nb_mir')
 wc(1.0, 5.48, z, 'S', 'nbwc')
 shower_glass(0.2, 4.15, 1.0, 4.16, z)
-# --- kids room (x 8.1-10.9, y 4.5-7.9): client reference (baby room) in soft pastel yellow instead of pink
-kz = z
-KOPS = {'N': [(8.5, 10.2, 0.9, 2.4)], 'S': [(9.75, 10.65, 0.0, 2.3)]}
-
-
-def img_mat(name, file, size, rough=0.8):
-    m_, N_, L_ = node_mat(name)
-    b_ = N_['Principled BSDF']
-    t_ = N_.new('ShaderNodeTexImage')
-    t_.image = bpy.data.images.load(os.path.join(IMG, file))
-    t_.projection = 'BOX'
-    tc_ = N_.new('ShaderNodeTexCoord')
-    mp_ = N_.new('ShaderNodeMapping')
-    mp_.inputs['Scale'].default_value = (1 / size, 1 / size, 1 / size)
-    L_.new(tc_.outputs['Object'], mp_.inputs['Vector'])
-    L_.new(mp_.outputs['Vector'], t_.inputs['Vector'])
-    L_.new(t_.outputs['Color'], b_.inputs['Base Color'])
-    b_.inputs['Roughness'].default_value = rough
-    return m_
-
-
-KWP = img_mat('kids_wallpaper', 'wallpaper_kids_yellow.png', 0.9)
-KYEL = mat('kids_panel_yellow', '#F0E3B4', 0.55)
-KYEL2 = mat('kids_panel_groove', '#E0CF98', 0.6)
-KCREAM = mat('kids_cream', '#EFE7D8', 0.95, sheen=0.5)
-KYFAB = mat('kids_yellow_fabric', '#EFD27E', 0.9, sheen=0.4)
-clad(8.1, 4.5, 10.9, 7.9, kz, 1.1, CEIL, KWP, KOPS, 'kid_wp')
-clad(8.1, 4.5, 10.9, 7.9, kz, 0.0, 1.1, KYEL, KOPS, 'kid_wains', t=0.03)
-# vertical grooves on the wainscot + warm LED strip on its top edge
-for x in [8.1 + 0.2 * i for i in range(1, 14)]:
-    if not (8.5 < x < 10.2):
-        box('kid_groove', x - 0.004, 7.86, kz + 0.1, x + 0.004, 7.871, kz + 1.08, KYEL2)
-for y in [4.5 + 0.2 * i for i in range(1, 17)]:
-    box('kid_groove', 8.13, y - 0.004, kz + 0.1, 8.141, y + 0.004, kz + 1.08, KYEL2)
-    box('kid_groove', 10.859, y - 0.004, kz + 0.1, 10.87, y + 0.004, kz + 1.08, KYEL2)
-clad(8.08, 4.48, 10.92, 7.92, kz, 1.1, 1.13, KYEL, KOPS, 'kid_cap', t=0.06)
-clad(8.07, 4.47, 10.93, 7.93, kz, 1.13, 1.136, M['led'], KOPS, 'kid_led', t=0.05)
-# tray ceiling with hidden cove light
-for (x0, y0, x1, y1) in [(8.1, 4.5, 10.9, 4.95), (8.1, 7.45, 10.9, 7.9), (8.1, 4.95, 8.55, 7.45), (10.45, 4.95, 10.9, 7.45)]:
-    box('kid_tray', x0, y0, kz + CEIL - 0.22, x1, y1, kz + CEIL, M['ceiling'])
-box('kid_tray_led', 8.55, 4.95, kz + CEIL - 0.225, 10.45, 7.45, kz + CEIL - 0.22, M['led']) if False else None
-cove(8.6, 5.0, 10.4, 7.4, kz + CEIL, 30)
-for (x, y) in [(8.33, 5.3), (8.33, 7.1), (10.67, 5.3), (10.67, 7.1)]:
-    downlight(x, y, kz + CEIL - 0.22)
-# daybed with cloud headboard along the east wall
-box('kbed_base', 9.95, 5.35, kz + 0.02, 10.86, 7.33, kz + 0.42, KCREAM, 0.06)
-box('kbed_side', 10.74, 5.35, kz + 0.02, 10.86, 7.33, kz + 0.72, KCREAM, 0.05)
-box('kbed_matt', 10.0, 5.4, kz + 0.42, 10.74, 7.3, kz + 0.58, M['linen_ivory'], 0.05)
-for (yy, zz, rr) in [(7.4, 0.62, 0.28), (7.4, 0.95, 0.24), (7.4, 1.12, 0.17)]:
-    for xx in (10.13, 10.43, 10.7):
-        o = cyl('kbed_cloud', 0, 0, 0, 0.14, rr, KCREAM, bevel=0.04)
-        o.rotation_euler = (math.radians(90), 0, 0)
-        o.location = (xx, yy, kz + zz)
-box('kbed_throw', 9.97, 5.55, kz + 0.57, 10.76, 6.05, kz + 0.61, KYFAB, 0.01)
-box('kbed_pill1', 10.1, 6.95, kz + 0.58, 10.7, 7.25, kz + 0.82, M['linen_ivory'], 0.07)
-box('kbed_pill2', 10.2, 6.75, kz + 0.58, 10.65, 6.97, kz + 0.78, KYFAB, 0.07)
-sphere('kbed_star', 10.2, 6.6, kz + 0.66, 0.1, KYFAB, 1, 0.5, 1)
-# nightstand + mushroom lamp near the window corner
-box('kns', 10.4, 7.42, kz, 10.86, 7.86, kz + 0.52, M['oak_light'], 0.02)
-cyl('klamp_stem', 10.63, 7.64, kz + 0.52, kz + 0.66, 0.035, KYFAB)
-sphere('klamp_cap', 10.63, 7.64, kz + 0.7, 0.11, M['lamp'], 1, 1, 0.6)
-# low open oak cubby shelf with yellow baskets on the west wall
-box('kshelf', 8.14, 5.1, kz, 8.52, 6.95, kz + 0.78, M['oak_light'], 0.01)
-for i in range(4):
-    for j in range(2):
-        yy = 5.18 + i * 0.44
-        zz = kz + 0.06 + j * 0.37
-        box('kbasket', 8.2, yy, zz, 8.5, yy + 0.36, zz + 0.25, KYFAB if (i + j) % 2 else KCREAM, 0.02)
-cyl('kvase', 8.33, 5.35, kz + 0.78, kz + 0.98, 0.07, KYFAB)
-sphere('kflowers', 8.33, 5.35, kz + 1.05, 0.11, M['plant'])
-sphere('kstar_light', 8.33, 6.7, kz + 0.88, 0.09, M['led'], 1, 0.4, 1)
-# floating shelf + frames
-box('kfshelf', 8.12, 5.3, kz + 1.6, 8.34, 6.3, kz + 1.63, M['oak_light'])
-box('kframe1', 8.14, 5.5, kz + 1.63, 8.17, 5.85, kz + 2.05, M['oak_light'])
-box('kframe1i', 8.172, 5.53, kz + 1.66, 8.175, 5.82, kz + 2.02, KCREAM)
-for (ya, yb, za, zb) in [(5.7, 6.1, 1.45, 1.95), (6.25, 6.7, 1.4, 2.0)]:
-    box('kframe', 10.84, ya, kz + za, 10.87, yb, kz + zb, M['oak_light'])
-    box('kframe_in', 10.835, ya + 0.04, kz + za + 0.04, 10.84, yb - 0.04, kz + zb - 0.04, KCREAM)
-    sphere('kframe_heart', 10.833, (ya + yb) / 2, kz + (za + zb) / 2, 0.05, KYFAB, 0.2, 1, 1)
-# curtains: yellow side panels + sheer centre
-curtain(8.25, 7.8, 8.7, 7.8, kz + 0.02, kz + CEIL - 0.24, KYFAB, 'kcurtL')
-curtain(10.0, 7.8, 10.45, 7.8, kz + 0.02, kz + CEIL - 0.24, KYFAB, 'kcurtR')
-curtain(8.7, 7.84, 10.0, 7.84, kz + 0.02, kz + CEIL - 0.24, M['sheer'], 'ksheer')
-# cream rug with soft yellow dots, basket with plush
-rug(8.7, 4.85, 9.9, 7.2, kz, M['linen_ivory'], 'krug')
-import random as _kr
-_k = _kr.Random(5)
-for j in range(26):
-    cyl('krug_dot', 8.8 + _k.random() * 1.0, 4.95 + _k.random() * 2.15, kz + 0.014, kz + 0.016, 0.045, KYFAB, verts=16)
-cyl('kbasket_toy', 8.45, 4.85, kz, kz + 0.4, 0.22, KCREAM, bevel=0.03)
-sphere('kplush', 8.45, 4.85, kz + 0.48, 0.14, M['linen_ivory'])
+# --- office (old kids room, x 8.1-10.9, y 4.5-7.9): walnut library, desk under window
+joinery_wall(8.12, 4.6, 8.55, 7.85, z, z + CEIL - 0.05, M['walnut'], 'library', panel=0.8)
+for sh in range(5):
+    zz = z + 0.45 + sh * 0.48
+    box('shelf_led', 8.5, 4.7, zz, 8.55, 7.75, zz + 0.005, M['led'])
+    for k in range(10):
+        by = 4.8 + k * 0.3
+        box('books', 8.18, by, zz + 0.01, 8.48, by + 0.18, zz + 0.3, M['linen'] if k % 2 else M['boucle'])
+box('desk', 8.8, 7.15, z + 0.74, 10.6, 7.85, z + 0.78, M['walnut'], 0.01)
+box('desk_ped', 10.0, 7.2, z, 10.55, 7.8, z + 0.74, M['walnut'], 0.01)
+box('desk_leg', 8.85, 7.2, z, 8.95, 7.8, z + 0.74, M['bronze'])
+box('desk_chair', 9.45, 6.45, z, 9.95, 6.95, z + 0.5, M['boucle'], 0.08)
+box('desk_chair_b', 9.45, 6.35, z + 0.5, 9.95, 6.45, z + 1.1, M['boucle'], 0.04)
+for o in lounge_chair(10.25, 5.25, 200, M['linen'], 'ochair'):
+    o.location.z += z
+box('o_side', 9.55, 4.7, z, 9.95, 5.1, z + 0.5, M['oak'], 0.02)
+rug(8.8, 4.8, 10.7, 6.9, z, M['rug_taupe'], 'orug')
+curtain(8.4, 7.8, 10.3, 7.8, z + 0.02, z + 2.95, name='curt_off')
+linear_pendant(9.0, 10.3, 7.0, z + CEIL, 0.9, 'off_lin')
 # --- master vestibule (x 11.1-12.7, y 4.5-5.45): dressing niche
 joinery_wall(11.12, 4.5, 11.55, 5.45, z, z + 2.4, M['oak'], 'vest_ward', panel=0.48)
 # --- master bath (x 11.1-12.7, y 5.6-7.9)
@@ -1007,32 +937,43 @@ joinery_wall(12.92, 5.5, 13.5, 7.3, z, z + 2.6, M['oak'], 'm_ward_W', panel=0.6)
 box('m_ward_top', 12.92, 5.5, z + 2.6, 15.4, 7.9, z + CEIL, M['wall'])
 box('dress_tbl', 14.2, 4.52, z + 0.72, 15.4, 5.0, z + 0.76, M['oak'], 0.01)
 mirror_panel(14.4, 4.515, 15.2, 4.52, z + 1.0, z + 2.0, 'dress_mir')
-for o in lounge_chair(19.0, 4.95, 210, M['boucle'], 'mchair'):
-    o.location.z += z
 curtain(19.72, 4.55, 19.72, 7.85, z + 0.02, z + 2.95, name='curt_m')
 cove(15.9, 5.0, 19.3, 7.4, z + CEIL, 25)
-# --- office (x 12.9-19.8, y 0.2-4.3): library + desk facing door
-joinery_wall(13.1, 0.2, 16.4, 0.6, z, z + CEIL - 0.05, M['walnut'], 'library', panel=0.8)
-for sh in range(5):
-    zz = z + 0.45 + sh * 0.48
-    box('shelf_led', 13.2, 0.55, zz, 16.3, 0.6, zz + 0.005, M['led'])
-    for k in range(10):
-        bx = 13.3 + k * 0.3
-        box('books', bx, 0.25, zz + 0.01, bx + 0.18, 0.5, zz + 0.3, M['linen'] if k % 2 else M['boucle'])
-box('desk', 17.3, 1.3, z + 0.74, 18.3, 3.3, z + 0.78, M['walnut'], 0.01)
-box('desk_ped', 17.4, 1.4, z, 18.2, 1.9, z + 0.74, M['walnut'], 0.01)
-box('desk_leg', 17.75, 2.9, z, 17.85, 3.2, z + 0.74, M['bronze'])
-box('desk_chair', 18.45, 2.05, z + 0.0, 18.95, 2.55, z + 0.5, M['boucle'], 0.08)
-box('desk_chair_b', 18.85, 2.05, z + 0.5, 18.95, 2.55, z + 1.15, M['boucle'], 0.04)
-box('guest_ch1', 16.55, 1.6, z, 17.0, 2.05, z + 0.45, M['linen'], 0.06)
-box('guest_ch2', 16.55, 2.55, z, 17.0, 3.0, z + 0.45, M['linen'], 0.06)
-for o in sofa(13.2, 2.4, 2.4, 0.95, 'S', name='sofa_off'):
+# --- child room (x 12.9-16.55, y 0.2-4.3): pastel yellow + ivory wainscoting + natural oak
+kz = z
+KOPS = {'W': [(3.45, 4.25, 0.0, 2.3)]}
+clad(12.9, 0.2, 16.55, 4.3, kz, 0.9, CEIL, M['yellow_wall'], KOPS, 'kid_wp')
+clad(12.9, 0.2, 16.55, 4.3, kz, 0.0, 0.9, M['ivory_panel'], KOPS, 'kid_wains', t=0.03)
+clad(12.88, 0.18, 16.57, 4.32, kz, 0.88, 0.93, M['ivory_panel'], KOPS, 'kid_rail', t=0.05)
+# single bed with rounded pastel yellow headboard against the east partition
+box('kbed_frame', 14.45, 1.6, kz + 0.1, 16.5, 2.55, kz + 0.32, M['oak_light'], 0.06)
+box('kbed_matt', 14.5, 1.63, kz + 0.32, 16.45, 2.52, kz + 0.52, M['linen_ivory'], 0.06)
+box('kbed_duvet', 14.45, 1.58, kz + 0.48, 15.8, 2.57, kz + 0.58, M['yellow'], 0.06)
+cyl('kbed_hb', 16.5, 2.075, kz + 0.1, kz + 1.25, 0.55, M['yellow'], bevel=0.05).scale = (0.12, 1, 1)
+box('kbed_pillow', 16.05, 1.75, kz + 0.52, 16.4, 2.4, kz + 0.72, M['linen_ivory'], 0.07)
+cyl('knight', 16.25, 1.2, kz, kz + 0.5, 0.22, M['oak_light'], bevel=0.04)
+sphere('klamp', 16.25, 1.2, kz + 0.68, 0.14, M['lamp'])
+joinery_wall(12.95, 0.22, 14.9, 0.8, kz, kz + 2.3, M['ivory_panel'], 'kward', panel=0.65)
+cyl('krug', 14.6, 2.9, kz, kz + 0.012, 0.95, M['wool_rug'])
+cyl('kpouf', 13.6, 2.4, kz, kz + 0.38, 0.28, M['yellow'], bevel=0.1)
+for o in lounge_chair(13.5, 1.5, 60, M['boucle'], 'kchair'):
+    o.location.z += kz
+box('kdesk', 15.2, 3.85, kz + 0.6, 16.4, 4.27, kz + 0.64, M['oak_light'], 0.01)
+box('kshelf', 13.4, 4.25, kz + 1.4, 14.8, 4.28, kz + 1.43, M['oak_light'])
+sphere('kpend', 14.7, 2.2, kz + CEIL - 0.6, 0.28, M['lamp'], 1, 1, 0.7)
+# --- master dressing / sitting (x 16.75-19.8, y 0.2-4.3), opens to the bedroom at x 17.2-18.4
+joinery_wall(16.8, 0.22, 19.75, 0.82, z, z + 2.6, M['oak'], 'md_ward', panel=0.62)
+box('md_ward_top', 16.8, 0.22, z + 2.6, 19.75, 0.82, z + CEIL, M['wall'])
+box('md_island', 17.3, 1.7, z, 18.3, 2.4, z + 0.9, M['oak'], 0.01)
+box('md_island_top', 17.28, 1.68, z + 0.9, 18.32, 2.42, z + 0.93, M['trav'])
+for o in lounge_chair(19.2, 3.7, 220, M['boucle'], 'mdchair'):
     o.location.z += z
-coffee_round(14.4, 1.6, 0.45, z)
-rug(13.1, 0.9, 15.7, 3.3, z, M['rug_taupe'], 'orug')
-curtain(19.72, 1.85, 19.72, 3.55, z + 0.02, z + 2.95, name='curt_off')
-linear_pendant(17.4, 18.2, 2.3, z + CEIL, 0.9, 'off_lin')
-art(12.905, 1.3, 12.92, 3.0, z + 1.1, z + 2.2) if False else None
+box('md_side', 18.6, 3.75, z, 18.95, 4.1, z + 0.5, M['oak'], 0.02)
+mirror_panel(16.75, 2.9, 16.755, 3.9, z + 0.3, z + 2.2, 'md_mir')
+rug(17.0, 1.2, 19.6, 3.1, z, M['wool_rug'], 'mdrug')
+curtain(19.72, 1.85, 19.72, 3.55, z + 0.02, z + 2.95, name='curt_md')
+cove(16.9, 0.4, 19.6, 4.1, z + CEIL, 20)
+cove(13.0, 0.4, 16.4, 4.1, z + CEIL, 25)
 # --- office bath (x 11.1-12.7, y 0.2-3.2)
 vanity(11.12, 1.9, 11.58, 2.9, z, top_m=M['trav'], name='ob_van')
 mirror_panel(11.115, 2.0, 11.12, 2.8, z + 1.05, z + 2.05, 'ob_mir')
@@ -1055,7 +996,6 @@ for (x0, y0, x1, y1, zc, st) in [(5.5, 4.7, 6.8, 7.7, CEIL, 60), (0.3, 3.3, 1.5,
     cove(x0, y0, x1, y1, zc, st)
 cove(5.6, 0.5, 12.3, 4.0, CEIL, 14)
 cove(5.6, 0.5, 10.7, 4.1, L2Z + CEIL, 16)
-cove(13.1, 0.4, 19.6, 4.1, L2Z + CEIL, 14)
 cove(8.3, 4.7, 10.7, 7.7, L2Z + CEIL, 14)
 
 # ---------------------------------------------------------------- world, context outside

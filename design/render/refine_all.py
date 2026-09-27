@@ -41,8 +41,12 @@ ROOM = {
                     'cloud-shaped upholstered headboard, yellow throw and cushions, light oak nightstand with a mushroom lamp, '
                     'low light oak cubby shelf with yellow and cream baskets, floating oak shelf with frames, yellow curtains with '
                     'white sheer, cream rug with pastel yellow dots, tray ceiling with cove light, calm premium feeling.',
-    'Office': 'Home office and library: walnut library wall with lit shelves and books, walnut desk, boucle desk '
-              'chair, linen guest chairs, sofa and round travertine table, wool rug, sheer curtains.',
+    'Office': 'Home office: walnut library wall with lit shelves and books, walnut desk under the window, boucle desk '
+              'chair, linen lounge chair, wool rug, sheer curtains.',
+    'MasterDressing': 'Master dressing and sitting area: full-height smoked oak wardrobes, oak dressing island with '
+                      'travertine top, full-length mirror, boucle lounge chair by the window, sheer curtains, wool rug.',
+    'ChildBath': 'Bathroom with floors and walls fully clad in the exact same travertine vein-cut tiles (keep the '
+                 'travertine pattern), floating vanity with travertine top, mirror, wall-hung toilet, bronze fittings.',
     'OfficeBath': 'Bathroom with floors and walls fully clad in the exact same travertine vein-cut tiles (keep the '
                   'travertine pattern), floating vanity with travertine top, mirror, wall-hung toilet, bronze fittings.',
     'GuestRoom': 'Compact guest bedroom: single bed with taupe linen headboard, oak nightstand, oak wardrobe, '
