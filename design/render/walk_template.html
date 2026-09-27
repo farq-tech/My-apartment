@@ -1,0 +1,92 @@
+<title>Duplex Walkthrough</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500&family=IBM+Plex+Mono&display=swap">
+<style>
+:root{--bg:#141311;--panel:#1D1B18;--ink:#EEE8DF;--muted:#A0968A;--line:#3A352F;--accent:#D7A86E;--wall:#8C8175;--glass:#6FA3B8;
+--f:"IBM Plex Sans Arabic",system-ui,sans-serif;--m:"IBM Plex Mono",ui-monospace,monospace;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);overflow:hidden}
+.app{height:100%;display:grid;grid-template-columns:1fr 340px}
+.stage{position:relative;display:flex;align-items:center;justify-content:center;background:#000;min-width:0;touch-action:pan-y}
+.stage img{max-width:100%;max-height:100%;object-fit:contain;display:block;transition:opacity .25s}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:56px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
+background:rgba(20,19,17,.55);color:#fff;font-size:26px;cursor:pointer;display:grid;place-items:center}
+.nav:hover,.nav:focus-visible{background:rgba(215,168,110,.35);outline:none}
+#prev{left:16px}#next{right:16px}
+.count{position:absolute;bottom:14px;left:16px;font-family:var(--m);font-size:12px;letter-spacing:.1em;color:#ddd;background:rgba(0,0,0,.45);padding:4px 10px;border-radius:999px}
+aside{background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;gap:14px;padding:18px 16px;overflow:auto}
+.floor{font-family:var(--m);font-size:11px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+h1{margin:0;font-weight:400;font-size:26px;line-height:1.3}
+.view{font-family:var(--m);font-size:12px;color:var(--accent)}
+svg{width:100%;height:auto;display:block;min-height:80px;background:#24211D;border:1px solid var(--line);border-radius:6px}
+.rooms{display:flex;flex-direction:column;gap:2px;font-size:14px}
+.rooms button{all:unset;cursor:pointer;padding:6px 8px;border-radius:5px;color:var(--muted);display:flex;justify-content:space-between}
+.rooms button[aria-current="true"]{background:#2C2823;color:var(--ink)}
+.rooms button:hover,.rooms button:focus-visible{color:var(--ink);outline:1px solid var(--line)}
+.grp{font-family:var(--m);font-size:10.5px;letter-spacing:.14em;color:var(--muted);margin-top:8px;text-transform:uppercase}
+.hint{font-size:12px;color:var(--muted)}
+@media (max-width:820px){
+ .app{grid-template-columns:1fr;grid-template-rows:62vh 1fr}
+ aside{border-left:0;border-top:1px solid var(--line)}
+ .nav{width:44px;height:44px;font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){.stage img{transition:none}}
+</style>
+<div class="app" dir="rtl">
+  <div class="stage" id="stage" dir="ltr">
+    <img id="img" alt="">
+    <button class="nav" id="prev" aria-label="السابق">‹</button>
+    <button class="nav" id="next" aria-label="التالي">›</button>
+    <span class="count" id="count"></span>
+  </div>
+  <aside>
+    <div><div class="floor" id="floor"></div><h1 id="room"></h1><div class="view" id="view"></div></div>
+    <svg id="plan" role="img" aria-label="موقعك على المخطط"></svg>
+    <div class="hint">الأسهم في لوحة المفاتيح أو السحب بالإصبع للتنقل. النقطة على المخطط مكانك، والمخروط اتجاه النظر.</div>
+    <div class="rooms" id="rooms"></div>
+  </aside>
+</div>
+<script>
+const S=/*STOPS*/;const P=/*PLANS*/;
+let i=0;const $=id=>document.getElementById(id);
+const FL={1:'First Floor · الدور الأول',2:'Second Floor · الدور الثاني',0:'Facade · الواجهة'};
+function plan(s){
+  const svg=$('plan');
+  if(!s.floor){svg.style.display='none';return}
+  svg.style.display='block';
+  const p=P[s.floor],W=p.w+0.6,H=8.7;
+  svg.setAttribute('viewBox',`-0.3 -0.3 ${W} ${H}`);svg.style.aspectRatio=W+' / '+H;
+  const Y=y=>8.1-y;
+  let h='';
+  for(const r of p.rects){h+=`<rect x="${r[1]}" y="${Y(r[2]+r[4])}" width="${r[3]}" height="${r[4]}" fill="${r[0]==='g'?'var(--glass)':'var(--wall)'}"/>`}
+  const a=Math.atan2(s.ty-s.y,s.tx-s.x),f=s.fov*Math.PI/360,L=2.2;
+  const p1=[s.x+L*Math.cos(a-f),s.y+L*Math.sin(a-f)],p2=[s.x+L*Math.cos(a+f),s.y+L*Math.sin(a+f)];
+  h+=`<path d="M${s.x} ${Y(s.y)} L${p1[0]} ${Y(p1[1])} L${p2[0]} ${Y(p2[1])} Z" fill="var(--accent)" fill-opacity=".35"/>`;
+  h+=`<circle cx="${s.x}" cy="${Y(s.y)}" r="0.22" fill="var(--accent)" stroke="#141311" stroke-width="0.06"/>`;
+  svg.innerHTML=h;
+}
+function rooms(){
+  let h='',last=null,seen=new Set();
+  S.forEach((s,k)=>{const key=s.floor+s.room;if(seen.has(key))return;seen.add(key);
+    if(s.floor!==last){h+=`<div class="grp">${FL[s.floor]}</div>`;last=s.floor}
+    const n=S.filter(t=>t.floor===s.floor&&t.room===s.room).length;
+    h+=`<button data-k="${k}" data-key="${key}">${s.room}<span>${n}</span></button>`});
+  $('rooms').innerHTML=h;
+  $('rooms').querySelectorAll('button').forEach(b=>b.onclick=()=>show(+b.dataset.k));
+}
+function show(n){
+  i=(n+S.length)%S.length;const s=S[i];
+  $('img').src=s.img;$('img').alt=s.room;
+  $('floor').textContent=FL[s.floor];$('room').textContent=s.room;
+  $('view').textContent=s.view?('VIEW '+String(s.view).padStart(2,'0')):'';
+  $('count').textContent=(i+1)+' / '+S.length;
+  plan(s);
+  $('rooms').querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.key===s.floor+s.room?'true':'false'));
+  const nx=S[(i+1)%S.length];const pre=new Image();pre.src=nx.img;
+}
+$('prev').onclick=()=>show(i-1);$('next').onclick=()=>show(i+1);
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')show(i+1);if(e.key==='ArrowLeft')show(i-1)});
+let x0=null;$('stage').addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});
+$('stage').addEventListener('touchend',e=>{if(x0===null)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>40)show(d<0?i+1:i-1);x0=null});
+rooms();show(0);
+</script>
